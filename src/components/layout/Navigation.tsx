@@ -14,10 +14,11 @@ const Navigation: React.FC = () => {
   
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
-    { path: '/investor/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { path: '/investor/offerings', label: 'Offerings', icon: TrendingUp },
-    { path: '/investor/portfolio', label: 'Portfolio', icon: Briefcase },
-    { path: '/investor/profile', label: 'Profile', icon: User },
+    { path: '/investor/dashboard', label: 'Investor Dashboard', icon: LayoutDashboard },
+    { path: '/investor/offerings', label: 'Browse Offerings', icon: TrendingUp },
+    { path: '/investor/portfolio', label: 'My Portfolio', icon: Briefcase },
+    { path: '/company/dashboard', label: 'Company Dashboard', icon: LayoutDashboard },
+    { path: '/company/profile', label: 'Company Profile', icon: User },
   ];
 
   return (

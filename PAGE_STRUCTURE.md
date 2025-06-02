@@ -54,15 +54,101 @@
 ```
 
 ### 5. Company Pages (Company Representatives)
+
+#### Dashboard & Overview
 ```
-/company/dashboard       # Company dashboard
-/company/profile         # Company profile management
-/company/verification    # Company verification status
-/company/offerings       # Manage offerings
-/company/offerings/new   # Create new offering
-/company/offerings/:id   # Edit offering
-/company/investors       # View investors
-/company/reports         # Company reports
+/company/dashboard               # Company dashboard with metrics
+/company/analytics              # Detailed analytics and insights
+  /company/analytics/investors  # Investor demographics & behavior
+  /company/analytics/funding    # Funding progress & projections
+  /company/analytics/engagement # Investor engagement metrics
+```
+
+#### Profile & Settings
+```
+/company/profile                # Company profile management
+  /company/profile/basic        # Basic information
+  /company/profile/team         # Team members & leadership
+  /company/profile/financials   # Financial highlights
+  /company/profile/media        # Photos, videos, pitch deck
+/company/settings               # Company account settings
+  /company/settings/general     # General settings
+  /company/settings/users       # User management & permissions
+  /company/settings/banking     # Bank account details
+  /company/settings/notifications # Notification preferences
+/company/verification           # Company verification status
+  /company/verification/documents # Upload verification documents
+  /company/verification/status  # Track verification progress
+```
+
+#### Offering Management
+```
+/company/offerings              # List all offerings
+/company/offerings/new          # Create new offering wizard
+  /company/offerings/new/basic  # Basic offering details
+  /company/offerings/new/financial # Financial terms
+  /company/offerings/new/documents # Upload offering documents
+  /company/offerings/new/preview # Preview before submission
+/company/offerings/:id          # View offering details
+/company/offerings/:id/edit     # Edit offering
+/company/offerings/:id/investors # Offering-specific investors
+/company/offerings/:id/documents # Manage offering documents
+/company/offerings/:id/updates  # Post updates for investors
+/company/offerings/:id/close    # Close offering
+```
+
+#### Investor Relations
+```
+/company/investors              # All investors overview
+/company/investors/list         # Detailed investor list
+/company/investors/:id          # Individual investor profile
+/company/investors/export       # Export investor data
+/company/communications         # Communication center
+  /company/communications/announcements # Company announcements
+  /company/communications/updates # Post updates
+  /company/communications/messages # Direct messages with investors
+  /company/communications/campaigns # Email campaigns
+/company/investor-meetings      # Schedule & manage meetings
+  /company/investor-meetings/calendar # Meeting calendar
+  /company/investor-meetings/requests # Meeting requests
+  /company/investor-meetings/history # Past meetings
+```
+
+#### Document Management
+```
+/company/documents              # Document library
+  /company/documents/legal      # Legal documents
+  /company/documents/financial  # Financial reports
+  /company/documents/compliance # Compliance documents
+  /company/documents/marketing  # Marketing materials
+/company/documents/upload       # Upload new documents
+/company/documents/:id          # View/edit document details
+/company/data-room             # Virtual data room for due diligence
+  /company/data-room/access    # Manage access permissions
+  /company/data-room/activity  # Track document views
+```
+
+#### Reports & Compliance
+```
+/company/reports               # All reports dashboard
+  /company/reports/funding     # Funding reports
+  /company/reports/investors   # Investor reports
+  /company/reports/compliance  # Compliance reports
+  /company/reports/financial   # Financial reports
+/company/reports/generate      # Generate new reports
+/company/compliance            # Compliance center
+  /company/compliance/sebon    # SEBON requirements
+  /company/compliance/checklist # Compliance checklist
+  /company/compliance/calendar # Important dates & deadlines
+```
+
+#### Financial Management
+```
+/company/financials            # Financial overview
+  /company/financials/transactions # Transaction history
+  /company/financials/withdrawals # Request withdrawals
+  /company/financials/statements # Download statements
+  /company/financials/tax       # Tax documents
 ```
 
 ### 6. Admin Pages (Platform Administrators)
@@ -263,3 +349,56 @@ Once KYC is approved, users gain access to:
 - Session timeout for inactive users
 - Rate limiting on document uploads
 - CAPTCHA on public forms
+
+## Company Portal Features
+
+### Company Registration & Verification
+Companies must go through a verification process similar to investor KYC:
+1. **Basic Registration** - Company name, registration number, contact details
+2. **Document Submission** - Registration certificate, PAN, board resolution
+3. **Team Verification** - Key personnel KYC
+4. **Admin Review** - Platform admin approves company
+5. **Active Status** - Can create offerings
+
+### Offering Creation Workflow
+```mermaid
+graph TD
+    A[Company Dashboard] --> B[Create New Offering]
+    B --> C[Basic Information]
+    C --> D[Financial Terms]
+    D --> E[Upload Documents]
+    E --> F[Preview & Submit]
+    F --> G[Admin Review]
+    G --> H{Admin Decision}
+    H -->|Approve| I[Offering Goes Live]
+    H -->|Reject| J[Revision Required]
+    H -->|Request Info| K[Additional Info Needed]
+```
+
+### Company Dashboard Metrics
+- **Funding Overview**: Total raised, current offerings, investor count
+- **Investor Analytics**: Demographics, investment patterns, engagement
+- **Document Views**: Track which documents investors view most
+- **Communication Stats**: Message open rates, announcement views
+- **Financial Summary**: Pending withdrawals, transaction history
+
+### Investor Communication Tools
+1. **Announcements** - Broadcast updates to all investors
+2. **Direct Messages** - One-on-one communication with investors
+3. **Email Campaigns** - Targeted email campaigns
+4. **Meeting Scheduler** - Virtual meeting coordination
+5. **Update Posts** - Regular progress updates on offerings
+
+### Document Management System
+- **Categorized Storage**: Legal, financial, marketing documents
+- **Version Control**: Track document versions and changes
+- **Access Control**: Set permissions for different investor tiers
+- **Activity Tracking**: Monitor who views which documents
+- **Expiry Management**: Auto-reminders for document updates
+
+### Compliance & Reporting
+- **SEBON Reports**: Generate required regulatory reports
+- **Investor Reports**: Automated investor reporting
+- **Tax Documentation**: Generate tax certificates for investors
+- **Audit Trail**: Complete record of all platform activities
+- **Deadline Tracking**: Never miss compliance deadlines

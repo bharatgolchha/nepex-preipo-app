@@ -75,23 +75,134 @@ Nepex is a digital platform designed to democratize access to pre-IPO investment
 - Document upload for KYC (Supabase Storage)
 - Admin interface for KYC review
 
-### 5.2. Company and Offering Listings (Phase 1 Core)
+### 5.2. Company Registration and Profile Management (Phase 1 Core)
 
-**Description**: Companies can submit their profiles and create pre-IPO offerings. Investors can view these listings.
+**Description**: Companies can register on the platform, create comprehensive profiles, and manage their information to build trust with potential investors.
 
 **User Stories**:
-- **Company Rep**: As a company representative, I want to create a company profile with basic information.
-- **Company Rep**: As a company representative, I want to submit a pre-IPO offering with details.
-- **Admin**: As an admin, I want to review and approve/reject company profiles and their offerings.
-- **Investor**: As an investor, I want to browse a list of active pre-IPO offerings.
-- **Investor**: As an investor, I want to view details of a specific offering.
+- **Company Rep**: As a company representative, I want to register my company on the platform with email verification.
+- **Company Rep**: As a company representative, I want to create a detailed company profile including:
+  - Basic information (name, registration number, industry, founding date)
+  - Company description and vision
+  - Management team profiles
+  - Financial highlights (revenue, growth metrics)
+  - Contact information and official website
+- **Company Rep**: As a company representative, I want to upload verification documents (registration certificate, MOA/AOA, audited financials).
+- **Company Rep**: As a company representative, I want to update our company profile as needed.
+- **Admin**: As an admin, I want to review and verify company registrations before they can list offerings.
 
 **Technical Details**:
-- Standardized fields for company and offering information (Supabase schema)
-- Document upload for company prospectuses/information
-- Admin approval workflow for listings
+- Company registration flow with Supabase Auth
+- Comprehensive company profile schema in Supabase
+- Document storage for verification documents (Supabase Storage)
+- Company verification status tracking
+- Role-based access for company representatives
 
-### 5.3. Basic Investment Flow with SPV-based Pooling Mechanism (Phase 1 Core)
+### 5.3. Company Dashboard and Analytics (Phase 1 Core)
+
+**Description**: Companies have access to a dedicated dashboard showing key metrics, investment progress, and investor analytics.
+
+**User Stories**:
+- **Company Rep**: As a company representative, I want to see a dashboard with:
+  - Total capital raised across all offerings
+  - Number of investors (broken down by investment size)
+  - Current active offerings and their progress
+  - Pending actions (document requests, investor queries)
+  - Investment timeline visualization
+- **Company Rep**: As a company representative, I want to see real-time updates on investment progress.
+- **Company Rep**: As a company representative, I want to download reports on investor demographics and investment patterns.
+
+**Technical Details**:
+- Real-time dashboard using Supabase subscriptions
+- Data visualization components for metrics
+- Report generation functionality
+- Mobile-responsive dashboard design
+
+### 5.4. Offering Creation and Management (Phase 1 Core)
+
+**Description**: Companies can create, manage, and monitor their pre-IPO offerings with detailed parameters and documentation.
+
+**User Stories**:
+- **Company Rep**: As a company representative, I want to create a pre-IPO offering with:
+  - Offering details (amount to raise, minimum investment, valuation)
+  - Timeline (start date, end date, early bird periods)
+  - Use of funds breakdown
+  - Investment terms and conditions
+  - Risk factors and disclosures
+- **Company Rep**: As a company representative, I want to upload offering documents (prospectus, financial projections, business plan).
+- **Company Rep**: As a company representative, I want to set investment tiers with different benefits.
+- **Company Rep**: As a company representative, I want to pause, extend, or close an offering early if targets are met.
+- **Company Rep**: As a company representative, I want to see real-time progress of each offering.
+- **Admin**: As an admin, I want to review and approve offerings before they go live.
+
+**Technical Details**:
+- Structured offering creation wizard
+- Document management for offering materials
+- Offering status management (draft, pending approval, active, paused, completed)
+- Investment progress tracking
+- Automated notifications for milestones
+
+### 5.5. Investor Management and Communication (Phase 1 Core)
+
+**Description**: Companies can view investor details, manage relationships, and communicate with their investor base.
+
+**User Stories**:
+- **Company Rep**: As a company representative, I want to view a list of all investors with:
+  - Investment amount and date
+  - Contact information (as permitted by privacy settings)
+  - Investment type (direct or through SPV)
+  - KYC verification status
+- **Company Rep**: As a company representative, I want to send updates to all investors in a specific offering.
+- **Company Rep**: As a company representative, I want to respond to investor queries through the platform.
+- **Company Rep**: As a company representative, I want to export investor data for regulatory reporting.
+
+**Technical Details**:
+- Investor list with filtering and sorting capabilities
+- Bulk communication tools with templates
+- Message center for investor-company communication
+- Data export functionality for compliance
+- Privacy controls for investor information
+
+### 5.6. Document Management System (Phase 1 Core)
+
+**Description**: Companies can manage all documents related to their profile, offerings, and compliance requirements in a centralized system.
+
+**User Stories**:
+- **Company Rep**: As a company representative, I want to organize documents by category (legal, financial, marketing).
+- **Company Rep**: As a company representative, I want to control document visibility (public, investors only, specific offerings).
+- **Company Rep**: As a company representative, I want to track document views and downloads.
+- **Company Rep**: As a company representative, I want to update documents and maintain version history.
+- **Admin**: As an admin, I want to review and approve sensitive documents before they're made public.
+
+**Technical Details**:
+- Hierarchical document organization
+- Access control and permissions
+- Document versioning
+- Analytics on document engagement
+- Secure document storage using Supabase Storage
+
+### 5.7. Company Reporting and Compliance Tools (Phase 1 Core)
+
+**Description**: Tools to help companies meet regulatory requirements and provide transparency to investors.
+
+**User Stories**:
+- **Company Rep**: As a company representative, I want to generate reports for:
+  - SEBON compliance requirements
+  - Investor allocation details
+  - Financial summary for offerings
+  - SPV unit holder information
+- **Company Rep**: As a company representative, I want to maintain an audit trail of all platform activities.
+- **Company Rep**: As a company representative, I want to set up automated compliance reminders.
+- **Admin**: As an admin, I want to monitor company compliance status.
+
+**Technical Details**:
+- Report generation templates
+- Automated compliance tracking
+- Audit log functionality
+- Integration with regulatory reporting formats
+- Reminder and notification system
+
+### 5.8. Basic Investment Flow with SPV-based Pooling Mechanism (Phase 1 Core)
 
 **Description**: Investors can invest in offerings, with micro-investments facilitated through an SPV structure.
 
@@ -110,7 +221,7 @@ Nepex is a digital platform designed to democratize access to pre-IPO investment
 - Basic payment processing (manual reconciliation initially)
 - Digital confirmation of investment/unit allocation
 
-### 5.4. Simple Portfolio View (Phase 1 Core)
+### 5.9. Simple Portfolio View (Phase 1 Core)
 
 **Description**: Investors can view a summary of their investments.
 
@@ -122,7 +233,7 @@ Nepex is a digital platform designed to democratize access to pre-IPO investment
 - Display company name, amount invested, date of investment, number of units
 - No complex performance tracking for MVP
 
-### 5.5. Essential Educational Content (Phase 1 Core)
+### 5.10. Essential Educational Content (Phase 1 Core)
 
 **Description**: Basic information for users about pre-IPO investing and using the platform.
 
@@ -134,7 +245,7 @@ Nepex is a digital platform designed to democratize access to pre-IPO investment
 - Static pages or simple CMS-like structure using Supabase
 - Content covering: Basics of Pre-IPO, Risks, How Nepex Works, SPV Model Explained
 
-### 5.6. Administrative Approval Workflows & Basic Compliance (Phase 1 Core)
+### 5.11. Administrative Approval Workflows & Basic Compliance (Phase 1 Core)
 
 **Description**: Backend tools for admins to manage the platform and ensure fundamental compliance.
 
@@ -148,7 +259,7 @@ Nepex is a digital platform designed to democratize access to pre-IPO investment
 - Ability to update status of applications/offerings
 - Display of compliance information to users
 
-### 5.7. Platform Technology
+### 5.12. Platform Technology
 
 **Description**: The MVP will be a web-based application.
 
@@ -200,14 +311,15 @@ Nepex is a digital platform designed to democratize access to pre-IPO investment
 - Subscription Models (Premium/Diaspora Plans)
 - Extensive Service Fees
 - Full Diaspora Investment Flow
-- Advanced Investor/Company Analytics and Dashboards
 - AI-Powered Recommendations
-- Comprehensive Community Features
+- Comprehensive Community Features (forums, social features)
 - Blockchain Ledger for Fractional Ownership
 - Automated SEBON Reporting
 - Integration with Remittance Providers
 - Sophisticated Payment Gateway Integration
 - Tiered Investment Approach beyond Micro (SPV) and Standard
+- Advanced portfolio performance tracking and projections
+- Third-party integrations (accounting software, CRM systems)
 
 ## 8. Future Considerations (Post-MVP)
 
