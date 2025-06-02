@@ -13,6 +13,10 @@ import InvestorProfile from './pages/investor/Profile'
 import CompanyDashboard from './pages/company/Dashboard'
 import CompanyProfile from './pages/company/Profile'
 
+// Auth Pages
+import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
+
 function App() {
   return (
     <Router>
@@ -21,6 +25,12 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
+          
+          {/* Auth Routes */}
+          <Route path="/auth">
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
           
           {/* Investor Routes */}
           <Route path="/investor">

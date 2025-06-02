@@ -1,5 +1,6 @@
 import { ArrowRight, Shield, TrendingUp, Users } from 'lucide-react'
 import { Button } from '../ui/button'
+import { Link } from 'react-router-dom'
 
 /**
  * Hero section component for the NepEx landing page.
@@ -64,13 +65,17 @@ function HeroSection() {
           
           {/* Call-to-action buttons with enhanced styling */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <Button size="lg" className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              Start Investing
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-background/90 backdrop-blur-sm">
-              Join as Company
-            </Button>
+            <Link to="/auth/register">
+              <Button size="lg" className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                Start Investing
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+            <Link to="/auth/register">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-background/90 backdrop-blur-sm">
+                Join as Company
+              </Button>
+            </Link>
           </div>
           
           {/* Social proof with better visibility */}

@@ -51,12 +51,16 @@ const Navigation: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm">
-              Sign In
-            </Button>
-            <Button size="sm">
-              Get Started
-            </Button>
+            <Link to="/auth/login">
+              <Button variant="outline" size="sm">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/auth/register">
+              <Button size="sm">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
