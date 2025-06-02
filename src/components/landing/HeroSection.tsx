@@ -9,82 +9,81 @@ import { Button } from '../ui/button'
  */
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 gradient-bg opacity-10" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+      {/* Background gradient - reduced opacity for better text contrast */}
+      <div className="absolute inset-0 gradient-bg opacity-5" />
       
-      {/* Floating elements for visual interest */}
-      <div className="absolute top-20 left-10 w-20 h-20 nepal-flag-gradient rounded-full opacity-20 animate-float" />
-      <div className="absolute top-40 right-20 w-16 h-16 bg-blue-500 rounded-full opacity-15 animate-pulse" />
-      <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-green-500 rounded-full opacity-20 animate-bounce" />
+      {/* Floating elements for visual interest - moved further and reduced opacity */}
+      <div className="absolute top-32 left-16 w-20 h-20 nepal-flag-gradient rounded-full opacity-10 animate-float" />
+      <div className="absolute top-20 right-32 w-16 h-16 bg-blue-500 rounded-full opacity-8 animate-pulse" />
+      <div className="absolute bottom-32 left-1/3 w-12 h-12 bg-green-500 rounded-full opacity-10 animate-bounce" />
       
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      {/* Main content with improved z-index and background */}
+      <div className="container mx-auto px-4 py-20 relative z-20">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Trust indicators */}
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+          {/* Trust indicators with better contrast */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
+            <div className="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium shadow-sm border border-green-200">
               <Shield className="w-4 h-4" />
               SEBON Compliant
             </div>
-            <div className="flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+            <div className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium shadow-sm border border-blue-200">
               <Users className="w-4 h-4" />
               500+ Investors
             </div>
           </div>
           
-          {/* Main headline */}
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Democratizing{' '}
-            <span className="text-transparent bg-clip-text nepal-flag-gradient">
-              Pre-IPO Investments
-            </span>{' '}
-            in Nepal
+          {/* Main headline - simplified for troubleshooting */}
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-black">
+            Democratizing Pre-IPO Investments in Nepal
           </h1>
           
-          {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+          {/* Subheadline with better contrast */}
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed font-medium">
             Start investing from{' '}
-            <span className="font-semibold text-primary">NPR 10,000</span>{' '}
+            <span className="font-bold text-primary bg-primary/10 px-2 py-1 rounded">NPR 10,000</span>{' '}
             through secure SPV pooling. Access exclusive pre-IPO opportunities
             before they go public.
           </p>
           
-          {/* Key benefits */}
-          <div className="flex flex-wrap justify-center gap-6 mb-10 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
+          {/* Key benefits with improved visibility */}
+          <div className="flex flex-wrap justify-center gap-6 mb-10">
+            <div className="flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-sm rounded-lg border border-border shadow-sm">
               <TrendingUp className="w-4 h-4 text-green-600" />
-              Micro-investments from NPR 10K
+              <span className="text-sm font-medium text-foreground">Micro-investments from NPR 10K</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-sm rounded-lg border border-border shadow-sm">
               <Shield className="w-4 h-4 text-blue-600" />
-              SEBON regulated & secure
+              <span className="text-sm font-medium text-foreground">SEBON regulated & secure</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-sm rounded-lg border border-border shadow-sm">
               <Users className="w-4 h-4 text-purple-600" />
-              SPV pooling mechanism
+              <span className="text-sm font-medium text-foreground">SPV pooling mechanism</span>
             </div>
           </div>
           
-          {/* Call-to-action buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="text-lg px-8 py-6 h-auto">
+          {/* Call-to-action buttons with enhanced styling */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+            <Button size="lg" className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               Start Investing
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto">
+            <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-background/90 backdrop-blur-sm">
               Join as Company
             </Button>
           </div>
           
-          {/* Social proof */}
-          <p className="text-sm text-muted-foreground mt-8">
-            Trusted by investors • Backed by leading companies • SEBON compliant platform
-          </p>
+          {/* Social proof with better visibility */}
+          <div className="inline-block px-6 py-3 bg-background/60 backdrop-blur-sm rounded-full border border-border shadow-sm">
+            <p className="text-sm text-muted-foreground font-medium">
+              Trusted by investors • Backed by leading companies • SEBON compliant platform
+            </p>
+          </div>
         </div>
       </div>
       
       {/* Bottom curve */}
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0 z-10">
         <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-16 fill-background">
           <path d="M0,120 C150,60 350,60 600,120 C850,180 1050,60 1200,120 L1200,120 L0,120 Z"></path>
         </svg>
