@@ -3,14 +3,11 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
   TrendingUp,
-  TrendingDown,
   DollarSign,
-  Calendar,
   FileText,
   Download,
   PieChart,
   BarChart3,
-  Clock,
   Lock
 } from 'lucide-react';
 
@@ -245,7 +242,7 @@ const Portfolio: React.FC = () => {
                             NPR {investment.initialInvestment.toLocaleString()}
                           </td>
                           <td className="py-4 px-4 text-right text-gray-900">
-                            NPR {investment.currentValue.toLocaleString()}
+                            NPR {(investment.currentValue || investment.initialInvestment).toLocaleString()}
                           </td>
                           <td className="py-4 px-4 text-right">
                             <span className={`font-medium ${investment.returns > 0 ? 'text-green-600' : 'text-red-600'}`}>
@@ -255,7 +252,7 @@ const Portfolio: React.FC = () => {
                           <td className="py-4 px-4">
                             <div className="flex items-center justify-center text-sm text-gray-600">
                               <Lock className="h-4 w-4 mr-1" />
-                              {new Date(investment.lockInPeriod).toLocaleDateString()}
+                              {investment.lockInPeriod}
                             </div>
                           </td>
                         </tr>

@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Shield, FileText, Users } from 'lucide-react'
+import { Mail, Phone, MapPin } from 'lucide-react'
 
 /**
  * Footer component for the NepEx landing page.

@@ -162,7 +162,7 @@ const Login: React.FC = () => {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     className={`pl-10 pr-10 ${errors.password ? 'border-red-500' : ''}`}
-                    placeholder=""""""""""
+                    placeholder="••••••••"
                   />
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <button
@@ -242,9 +242,9 @@ const Login: React.FC = () => {
         {/* Footer Links */}
         <div className="text-center text-sm text-gray-500">
           <Link to="/terms" className="hover:text-gray-700">Terms</Link>
-          <span className="mx-2">"</span>
+          <span className="mx-2">•</span>
           <Link to="/privacy" className="hover:text-gray-700">Privacy</Link>
-          <span className="mx-2">"</span>
+          <span className="mx-2">•</span>
           <Link to="/help" className="hover:text-gray-700">Help</Link>
         </div>
       </div>

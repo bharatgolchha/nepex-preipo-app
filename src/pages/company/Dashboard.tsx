@@ -8,7 +8,6 @@ import {
   FileText,
   AlertCircle,
   CheckCircle,
-  Clock,
   ArrowRight,
   Calendar,
   BarChart3,

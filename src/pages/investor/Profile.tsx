@@ -5,12 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   User,
-  Mail,
-  Phone,
   MapPin,
-  Shield,
-  Bell,
-  Key,
+  Calendar,
+  Building2,
+  FileText,
   CheckCircle,
   AlertCircle,
   Edit2,
@@ -117,9 +115,9 @@ const Profile: React.FC = () => {
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'personal', label: 'Personal Info', icon: User },
-              { id: 'investment', label: 'Investment Profile', icon: Shield },
-              { id: 'security', label: 'Security', icon: Key },
-              { id: 'preferences', label: 'Preferences', icon: Bell }
+              { id: 'investment', label: 'Investment Profile', icon: Building2 },
+              { id: 'security', label: 'Security', icon: Calendar },
+              { id: 'preferences', label: 'Preferences', icon: FileText }
             ].map((tab) => (
               <button
                 key={tab.id}

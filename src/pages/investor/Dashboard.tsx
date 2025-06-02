@@ -3,12 +3,10 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
   TrendingUp,
-  Briefcase,
-  FileText,
+  DollarSign,
+  BarChart3,
   AlertCircle,
   ArrowRight,
-  DollarSign,
-  Users,
   Clock
 } from 'lucide-react';
 
@@ -125,7 +123,7 @@ const InvestorDashboard: React.FC = () => {
 
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <Briefcase className="h-8 w-8 text-purple-600" />
+              <BarChart3 className="h-8 w-8 text-purple-600" />
               <span className="text-sm text-gray-500">Active Investments</span>
             </div>
             <p className="text-2xl font-bold text-gray-900">{portfolioSummary.activeInvestments}</p>

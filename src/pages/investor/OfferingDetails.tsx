@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,7 +9,6 @@ import {
   Calendar,
   DollarSign,
   Users,
-  TrendingUp,
   FileText,
   CheckCircle,
   AlertCircle,
@@ -84,7 +83,7 @@ const offeringData = {
 };
 
 const OfferingDetails: React.FC = () => {
-  const { id } = useParams();
+  // const { id } = useParams(); // Currently unused
   const navigate = useNavigate();
   const [investmentAmount, setInvestmentAmount] = useState('');
   const [showInvestmentModal, setShowInvestmentModal] = useState(false);

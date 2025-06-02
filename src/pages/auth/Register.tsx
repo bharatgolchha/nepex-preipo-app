@@ -51,7 +51,7 @@ const Register: React.FC = () => {
     phone: '',
     acceptTerms: false
   });
-  const [errors, setErrors] = useState<Partial<FormData & { general?: string }>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData | 'general', string>>>({});
   const [isLoading, setIsLoading] = useState(false);
 
   const validateStep = () => {

@@ -5,18 +5,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Building2,
-  Globe,
-  Mail,
-  Phone,
   MapPin,
-  Calendar,
+  Phone,
+  Mail,
+  Globe,
   Users,
   FileText,
+  Edit2,
+  Upload,
   CheckCircle,
   AlertCircle,
-  Edit2,
   Save,
-  Upload,
   X
 } from 'lucide-react';
 
