@@ -101,9 +101,11 @@ export class AuthService {
         .insert({
           user_id: authData.user.id,
           overall_status: 'not_started',
-          identity_status: 'pending',
-          address_status: 'pending',
-          financial_status: 'pending'
+          personal_info_complete: false,
+          address_verified: false,
+          documents_uploaded: false,
+          documents_verified: false,
+          risk_assessment_complete: false
         })
 
       if (kycError) {
