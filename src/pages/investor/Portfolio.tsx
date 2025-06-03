@@ -18,7 +18,7 @@ const portfolioData = {
     currentValue: 415000,
     totalReturns: 65000,
     returnsPercentage: 18.57,
-    totalSPVUnits: 35,
+    totalInvestmentUnits: 35,
     activeInvestments: 4,
     exitedInvestments: 1,
     averageHoldingPeriod: '1.5 years'
@@ -30,14 +30,14 @@ const portfolioData = {
       sector: 'Technology',
       investmentDate: '2023-06-15',
       initialInvestment: 50000,
-      spvUnits: 5,
+      investmentUnits: 5,
       currentValue: 68000,
       returns: 18000,
       returnsPercentage: 36,
       status: 'active',
       lockInPeriod: '2026-06-15',
       expectedIPO: '2026-06-30',
-      documents: ['Investment Agreement', 'SPV Certificate']
+      documents: ['Investment Agreement', 'Unit Certificate']
     },
     {
       id: 2,
@@ -45,14 +45,14 @@ const portfolioData = {
       sector: 'Renewable Energy',
       investmentDate: '2023-08-20',
       initialInvestment: 100000,
-      spvUnits: 10,
+      investmentUnits: 10,
       currentValue: 125000,
       returns: 25000,
       returnsPercentage: 25,
       status: 'active',
       lockInPeriod: '2026-08-20',
       expectedIPO: '2026-12-31',
-      documents: ['Investment Agreement', 'SPV Certificate', 'Annual Report 2023']
+      documents: ['Investment Agreement', 'Unit Certificate', 'Annual Report 2023']
     },
     {
       id: 3,
@@ -60,14 +60,14 @@ const portfolioData = {
       sector: 'Financial Services',
       investmentDate: '2023-10-10',
       initialInvestment: 100000,
-      spvUnits: 10,
+      investmentUnits: 10,
       currentValue: 115000,
       returns: 15000,
       returnsPercentage: 15,
       status: 'active',
       lockInPeriod: '2026-10-10',
       expectedIPO: '2027-03-31',
-      documents: ['Investment Agreement', 'SPV Certificate']
+      documents: ['Investment Agreement', 'Unit Certificate']
     },
     {
       id: 4,
@@ -75,14 +75,14 @@ const portfolioData = {
       sector: 'Healthcare',
       investmentDate: '2024-01-15',
       initialInvestment: 75000,
-      spvUnits: 7.5,
+      investmentUnits: 7.5,
       currentValue: 82000,
       returns: 7000,
       returnsPercentage: 9.33,
       status: 'active',
       lockInPeriod: '2027-01-15',
       expectedIPO: '2025-12-31',
-      documents: ['Investment Agreement', 'SPV Certificate', 'Quarterly Report Q3 2024']
+      documents: ['Investment Agreement', 'Unit Certificate', 'Quarterly Report Q3 2024']
     },
     {
       id: 5,
@@ -90,7 +90,7 @@ const portfolioData = {
       sector: 'Education',
       investmentDate: '2022-03-10',
       initialInvestment: 25000,
-      spvUnits: 2.5,
+      investmentUnits: 2.5,
       exitDate: '2024-06-15',
       exitValue: 45000,
       returns: 20000,
@@ -163,11 +163,11 @@ const Portfolio: React.FC = () => {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-2">
               <BarChart3 className="h-8 w-8 text-orange-600" />
-              <span className="text-sm text-gray-500">SPV Units</span>
+              <span className="text-sm text-gray-500">Investment Units</span>
             </div>
-            <p className="text-2xl font-bold text-gray-900">
-              {portfolioData.summary.totalSPVUnits}
-            </p>
+            <div className="text-2xl font-bold text-gray-900">
+              {portfolioData.summary.totalInvestmentUnits}
+            </div>
           </Card>
         </div>
 

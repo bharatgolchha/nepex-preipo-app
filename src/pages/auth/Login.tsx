@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useAuth } from '@/store/authContext';
 import {
   Mail,
   Lock,
@@ -18,6 +19,7 @@ import {
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState<'investor' | 'company' | null>(null);
   const [formData, setFormData] = useState({
@@ -49,10 +51,8 @@ const Login: React.FC = () => {
 
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      // In a real app, this would make an API call to authenticate
-      console.log('Login attempt:', { ...formData, userType });
+    try {
+      await login(formData.email, formData.password, userType);
       
       // Navigate based on user type
       if (userType === 'investor') {
@@ -60,9 +60,11 @@ const Login: React.FC = () => {
       } else {
         navigate('/company/dashboard');
       }
-      
+    } catch (error) {
+      setErrors({ general: 'Login failed. Please try again.' });
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -185,15 +187,11 @@ const Login: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                   />
-                  <Label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                  <Label htmlFor="remember-me" className="ml-2 text-sm text-gray-600">
                     Remember me
                   </Label>
                 </div>
-
-                <Link
-                  to="/auth/forgot-password"
-                  className="text-sm text-blue-600 hover:text-blue-500"
-                >
+                <Link to="/auth/forgot-password" className="text-sm text-blue-600 hover:text-blue-500">
                   Forgot password?
                 </Link>
               </div>
@@ -205,10 +203,7 @@ const Login: React.FC = () => {
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-                    Signing in...
-                  </div>
+                  'Signing in...'
                 ) : (
                   <>
                     <LogIn className="h-5 w-5 mr-2" />
@@ -221,32 +216,25 @@ const Login: React.FC = () => {
               <div className="mt-4 p-4 bg-gray-50 rounded-lg">
                 <p className="text-sm text-gray-600 font-medium mb-2">Demo Credentials:</p>
                 <div className="space-y-1 text-sm text-gray-600">
-                  <p>Investor: investor@demo.com / demo123</p>
-                  <p>Company: company@demo.com / demo123</p>
+                  <p><strong>Email:</strong> demo@example.com</p>
+                  <p><strong>Password:</strong> demo123</p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Note: Any valid email/password works in demo mode
+                  </p>
                 </div>
               </div>
             </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                Don't have an account?{' '}
+                <Link to="/auth/register" className="text-blue-600 hover:text-blue-500 font-medium">
+                  Sign up
+                </Link>
+              </p>
+            </div>
           </Card>
         )}
-
-        {/* Sign Up Link */}
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
-            <Link to="/auth/register" className="font-medium text-blue-600 hover:text-blue-500">
-              Sign up for free
-            </Link>
-          </p>
-        </div>
-
-        {/* Footer Links */}
-        <div className="text-center text-sm text-gray-500">
-          <Link to="/terms" className="hover:text-gray-700">Terms</Link>
-          <span className="mx-2">•</span>
-          <Link to="/privacy" className="hover:text-gray-700">Privacy</Link>
-          <span className="mx-2">•</span>
-          <Link to="/help" className="hover:text-gray-700">Help</Link>
-        </div>
       </div>
     </div>
   );

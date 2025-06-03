@@ -193,6 +193,13 @@ const Register: React.FC = () => {
                       <p className="text-sm text-gray-500 mt-1">
                         Raise pre-IPO funding from verified investors
                       </p>
+                      <Link 
+                        to="/auth/company-register" 
+                        className="text-xs text-blue-600 hover:underline mt-2 inline-block"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Use detailed company registration →
+                      </Link>
                     </div>
                   </div>
                 </button>
@@ -418,11 +425,11 @@ const Register: React.FC = () => {
                   {errors.acceptTerms && <p className="mt-1 text-sm text-red-600">{errors.acceptTerms}</p>}
                 </div>
 
-                {/* SEBON Compliance Notice */}
+                {/* KYC Notice */}
                 <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                   <p className="text-sm text-blue-800">
-                    <strong>Note:</strong> All accounts require KYC verification as per SEBON regulations.
-                    You'll need to submit documents after registration.
+                    <strong>Note:</strong> All accounts require KYC verification as per standard
+                    investment platform requirements. You'll need to submit documents after registration.
                   </p>
                 </div>
 

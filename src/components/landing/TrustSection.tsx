@@ -1,41 +1,41 @@
 import { Shield, Lock, FileCheck, Users, Award, CheckCircle } from 'lucide-react'
 
 /**
- * Trust and Security section highlighting compliance and safety features.
+ * TrustSection component showcasing security and compliance.
  * 
- * Emphasizes SEBON compliance, security measures, and regulatory
- * adherence to build trust with potential investors.
+ * Emphasizes platform security, regulatory compliance, security measures, and regulatory
+ * oversight to build investor confidence.
  */
 function TrustSection() {
   const trustFeatures = [
     {
       icon: Shield,
-      title: "SEBON Regulated",
-      description: "Fully compliant with Securities Board of Nepal regulations and guidelines.",
-      highlight: "100% Compliant"
-    },
-    {
-      icon: Lock,
-      title: "Bank-Level Security",
-      description: "Advanced encryption and security measures to protect your investments and data.",
-      highlight: "256-bit Encryption"
+      title: "Secure Platform",
+      description: "Bank-grade security with end-to-end encryption and secure data storage.",
+      highlight: "256-bit SSL encryption"
     },
     {
       icon: FileCheck,
-      title: "Due Diligence",
-      description: "Thorough verification of all companies and offerings before listing.",
-      highlight: "Verified Companies"
+      title: "Investment Guidelines & Compliance",
+      description: "All investments follow strict guidelines and compliance protocols.",
+      highlight: "100% compliant processes"
     },
     {
       icon: Users,
-      title: "Transparent Process",
-      description: "Clear documentation and transparent investment process with regular updates.",
-      highlight: "Full Transparency"
+      title: "Verified Companies",
+      description: "Rigorous due diligence process ensures only quality companies are listed.",
+      highlight: "Thorough verification process"
+    },
+    {
+      icon: Lock,
+      title: "Data Protection",
+      description: "Your personal and financial information is protected with industry-leading security measures.",
+      highlight: "Advanced security protocols"
     }
   ]
 
   const complianceFeatures = [
-    "SEBON Registration & Compliance",
+    "Investment Platform Registration & Compliance",
     "3-Year Lock-in Period Enforcement",
     "KYC Verification for All Users",
     "Regular Regulatory Reporting",
@@ -54,11 +54,11 @@ function TrustSection() {
               <span className="text-primary font-semibold">Trusted & Regulated</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
-              Your Security is Our Priority
+              Security & Trust
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We maintain the highest standards of security and regulatory compliance 
-              to protect your investments and ensure a trustworthy platform.
+              We adhere to strict security standards and maintain
+              transparency in all our processes. Your investments are secure with us.
             </p>
           </div>
 
@@ -101,8 +101,8 @@ function TrustSection() {
                 Regulatory Compliance
               </h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                We adhere to all Securities Board of Nepal (SEBON) requirements and maintain 
-                strict compliance standards to ensure investor protection and platform integrity.
+                We adhere to strict regulatory requirements and maintain 
+                compliance standards to ensure investor protection and platform integrity.
               </p>
               
               <div className="space-y-4">

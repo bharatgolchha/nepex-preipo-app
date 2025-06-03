@@ -1,25 +1,56 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/store/authContext';
 import {
   LayoutDashboard,
   TrendingUp,
   Briefcase,
   User,
-  Home
+  Home,
+  LogOut
 } from 'lucide-react';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
-  
-  const navItems = [
-    { path: '/', label: 'Home', icon: Home },
-    { path: '/investor/dashboard', label: 'Investor Dashboard', icon: LayoutDashboard },
-    { path: '/investor/offerings', label: 'Browse Offerings', icon: TrendingUp },
-    { path: '/investor/portfolio', label: 'My Portfolio', icon: Briefcase },
-    { path: '/company/dashboard', label: 'Company Dashboard', icon: LayoutDashboard },
-    { path: '/company/profile', label: 'Company Profile', icon: User },
-  ];
+  const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
+
+  // Define navigation items based on user type
+  const getNavItems = () => {
+    const baseItems = [
+      { path: '/', label: 'Home', icon: Home, userType: 'both' }
+    ];
+
+    if (!isAuthenticated) {
+      return baseItems;
+    }
+
+    if (user?.userType === 'investor') {
+      return [
+        ...baseItems,
+        { path: '/investor/dashboard', label: 'Dashboard', icon: LayoutDashboard, userType: 'investor' },
+        { path: '/investor/offerings', label: 'Browse Offerings', icon: TrendingUp, userType: 'investor' },
+        { path: '/investor/portfolio', label: 'My Portfolio', icon: Briefcase, userType: 'investor' },
+        { path: '/investor/profile', label: 'Profile', icon: User, userType: 'investor' },
+      ];
+    } else if (user?.userType === 'company') {
+      return [
+        ...baseItems,
+        { path: '/company/dashboard', label: 'Dashboard', icon: LayoutDashboard, userType: 'company' },
+        { path: '/company/profile', label: 'Company Profile', icon: User, userType: 'company' },
+      ];
+    }
+
+    return baseItems;
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const navItems = getNavItems();
 
   return (
     <nav className="bg-white border-b">
@@ -51,16 +82,35 @@ const Navigation: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <Link to="/auth/login">
-              <Button variant="outline" size="sm">
-                Sign In
-              </Button>
-            </Link>
-            <Link to="/auth/register">
-              <Button size="sm">
-                Get Started
-              </Button>
-            </Link>
+            {!isAuthenticated ? (
+              <>
+                <Link to="/auth/login">
+                  <Button variant="outline" size="sm">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/auth/register">
+                  <Button size="sm">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <span className="text-sm text-gray-600 hidden md:inline">
+                  Welcome, {user?.name}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="flex items-center gap-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>

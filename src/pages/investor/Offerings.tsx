@@ -19,6 +19,7 @@ const allOfferings = [
   {
     id: 1,
     companyName: 'TechCo Nepal Pvt. Ltd.',
+    logo: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
     sector: 'Technology',
     description: 'Leading software development company specializing in fintech solutions for the Nepalese market.',
     minInvestment: 10000,
@@ -35,6 +36,7 @@ const allOfferings = [
   {
     id: 2,
     companyName: 'Green Energy Solutions',
+    logo: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
     sector: 'Renewable Energy',
     description: 'Pioneer in solar energy solutions with projects across Nepal, focusing on rural electrification.',
     minInvestment: 25000,
@@ -51,6 +53,7 @@ const allOfferings = [
   {
     id: 3,
     companyName: 'HealthPlus Hospitals',
+    logo: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
     sector: 'Healthcare',
     description: 'Multi-specialty hospital chain with 5 locations across major cities in Nepal.',
     minInvestment: 50000,
@@ -67,6 +70,7 @@ const allOfferings = [
   {
     id: 4,
     companyName: 'EduTech Nepal',
+    logo: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
     sector: 'Education Technology',
     description: 'Digital learning platform serving 100,000+ students across Nepal with interactive courses.',
     minInvestment: 10000,
@@ -83,6 +87,7 @@ const allOfferings = [
   {
     id: 5,
     companyName: 'AgroTech Innovations',
+    logo: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
     sector: 'Agriculture',
     description: 'Modern farming solutions including hydroponics and smart irrigation systems.',
     minInvestment: 15000,
@@ -197,12 +202,27 @@ const Offerings: React.FC = () => {
               <div className="p-6">
                 {/* Header */}
                 <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900">{offering.companyName}</h3>
-                    <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
-                      <Building2 className="h-4 w-4" />
-                      {offering.sector}
-                    </p>
+                  <div className="flex items-start gap-3">
+                    {/* Company Logo */}
+                    <div className="flex-shrink-0">
+                      <img
+                        src={offering.logo}
+                        alt={`${offering.companyName} logo`}
+                        className="w-12 h-12 rounded-lg object-cover border border-gray-200"
+                        onError={(e) => {
+                          // Fallback to a placeholder if image fails to load
+                          e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(offering.companyName)}&size=48&background=f3f4f6&color=374151&format=svg`;
+                        }}
+                      />
+                    </div>
+                    {/* Company Info */}
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">{offering.companyName}</h3>
+                      <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
+                        <Building2 className="h-4 w-4" />
+                        {offering.sector}
+                      </p>
+                    </div>
                   </div>
                   {offering.status === 'closing_soon' && (
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">

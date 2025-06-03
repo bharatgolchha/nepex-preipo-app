@@ -23,30 +23,30 @@ const portfolioSummary = {
 const recentInvestments = [
   {
     id: 1,
-    companyName: 'TechCo Nepal Pvt. Ltd.',
-    investmentDate: '2024-12-15',
+    company: 'TechCo Nepal Pvt. Ltd.',
     amount: 50000,
-    spvUnits: 5,
-    status: 'active',
-    currentValue: 58000
+    investmentUnits: 5,
+    date: '2024-01-15',
+    status: 'Active',
+    currentValue: 55000
   },
   {
     id: 2,
-    companyName: 'Green Energy Solutions',
-    investmentDate: '2024-11-20',
+    company: 'GreenEnergy Solutions',
     amount: 100000,
-    spvUnits: 10,
-    status: 'active',
-    currentValue: 112000
+    investmentUnits: 10,
+    date: '2024-02-20',
+    status: 'Active',
+    currentValue: 115000
   },
   {
     id: 3,
-    companyName: 'FinTech Innovations Nepal',
-    investmentDate: '2024-10-10',
+    company: 'FinTech Innovations',
     amount: 100000,
-    spvUnits: 10,
-    status: 'active',
-    currentValue: 115000
+    investmentUnits: 10,
+    date: '2024-03-10',
+    status: 'Active',
+    currentValue: 120000
   }
 ];
 
@@ -155,7 +155,7 @@ const InvestorDashboard: React.FC = () => {
                     <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">Company</th>
                     <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">Date</th>
                     <th className="text-right py-3 px-4 text-sm font-medium text-gray-700">Amount</th>
-                    <th className="text-right py-3 px-4 text-sm font-medium text-gray-700">SPV Units</th>
+                    <th className="text-right py-3 px-4 text-sm font-medium text-gray-700">Investment Units</th>
                     <th className="text-right py-3 px-4 text-sm font-medium text-gray-700">Current Value</th>
                     <th className="text-center py-3 px-4 text-sm font-medium text-gray-700">Status</th>
                   </tr>
@@ -164,16 +164,16 @@ const InvestorDashboard: React.FC = () => {
                   {recentInvestments.map((investment) => (
                     <tr key={investment.id} className="border-b hover:bg-gray-50">
                       <td className="py-4 px-4">
-                        <p className="font-medium text-gray-900">{investment.companyName}</p>
+                        <p className="font-medium text-gray-900">{investment.company}</p>
                       </td>
                       <td className="py-4 px-4 text-gray-600">
-                        {new Date(investment.investmentDate).toLocaleDateString()}
+                        {new Date(investment.date).toLocaleDateString()}
                       </td>
                       <td className="py-4 px-4 text-right text-gray-900">
                         NPR {investment.amount.toLocaleString()}
                       </td>
                       <td className="py-4 px-4 text-right text-gray-900">
-                        {investment.spvUnits}
+                        {investment.investmentUnits}
                       </td>
                       <td className="py-4 px-4 text-right">
                         <span className="text-gray-900">NPR {investment.currentValue.toLocaleString()}</span>

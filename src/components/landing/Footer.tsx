@@ -29,7 +29,7 @@ function Footer() {
     legal: [
       { name: "Terms of Service", href: "#" },
       { name: "Privacy Policy", href: "#" },
-      { name: "SEBON Compliance", href: "#" },
+      { name: "Investment Guidelines", href: "#" },
       { name: "Cookie Policy", href: "#" }
     ]
   }
@@ -51,7 +51,7 @@ function Footer() {
               
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 Democratizing access to pre-IPO investment opportunities in Nepal. 
-                Start investing from NPR 10,000 through our secure SPV pooling mechanism.
+                Start investing from NPR 10,000 through our secure investment platform.
               </p>
               
               {/* Contact info */}
@@ -152,7 +152,7 @@ function Footer() {
             <div className="mt-6 p-4 bg-muted/50 rounded-lg">
               <p className="text-xs text-muted-foreground leading-relaxed">
                 <strong>Investment Disclaimer:</strong> All investments are subject to market risks. 
-                Pre-IPO investments have a mandatory 3-year lock-in period as per SEBON regulations. 
+                Pre-IPO investments have a mandatory 3-year lock-in period as per investment regulations. 
                 Past performance does not guarantee future returns. Please read all investment 
                 documents carefully before investing.
               </p>

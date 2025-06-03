@@ -1,37 +1,43 @@
-import { DollarSign, Shield, Users, TrendingUp } from 'lucide-react'
+import { Shield, Users, TrendingUp, Zap, Eye, HeadphonesIcon } from 'lucide-react'
 
 /**
  * Value proposition section showcasing the key benefits of NepEx.
  * 
- * Highlights micro-investments, SPV pooling, SEBON compliance,
- * and exclusive access to pre-IPO opportunities.
+ * Highlights micro-investments, investment pooling, secure platform,
+ * transparent processes, and expert support.
  */
 function ValueProposition() {
-  const benefits = [
+  const features = [
     {
-      icon: DollarSign,
+      icon: TrendingUp,
       title: "Micro-Investments",
-      description: "Start investing with as little as NPR 10,000. No need for large capital requirements.",
-      highlight: "From NPR 10K"
+      description: "Start investing with as little as NPR 10,000 in pre-IPO opportunities.",
     },
     {
       icon: Users,
-      title: "SPV-Based Pooling",
-      description: "Pool your investments with other micro-investors through Special Purpose Vehicles.",
-      highlight: "Pool & Invest"
+      title: "Investment Pooling",
+      description: "Pool your investments with other investors to access larger opportunities.",
     },
     {
       icon: Shield,
-      title: "SEBON Compliant",
-      description: "Fully regulated and compliant with Securities Board of Nepal requirements.",
-      highlight: "100% Secure"
+      title: "Secure Platform",
+      description: "Bank-grade security and transparent investment processes.",
     },
     {
-      icon: TrendingUp,
-      title: "Exclusive Access",
-      description: "Get early access to high-growth companies before they go public on the stock market.",
-      highlight: "Pre-IPO Only"
-    }
+      icon: Eye,
+      title: "Transparent Process",
+      description: "Clear documentation and real-time tracking of all investments.",
+    },
+    {
+      icon: Zap,
+      title: "Fast Processing",
+      description: "Quick verification and investment processing for faster market entry.",
+    },
+    {
+      icon: HeadphonesIcon,
+      title: "Expert Support",
+      description: "Dedicated support team to guide you through your investment journey.",
+    },
   ]
 
   return (
@@ -51,8 +57,8 @@ function ValueProposition() {
 
           {/* Benefits grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => {
-              const IconComponent = benefit.icon
+            {features.map((feature, index) => {
+              const IconComponent = feature.icon
               return (
                 <div
                   key={index}
@@ -63,19 +69,14 @@ function ValueProposition() {
                     <IconComponent className="w-8 h-8 text-white" />
                   </div>
 
-                  {/* Highlight badge */}
-                  <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
-                    {benefit.highlight}
-                  </div>
-
                   {/* Title */}
                   <h3 className="text-xl font-semibold text-foreground mb-3">
-                    {benefit.title}
+                    {feature.title}
                   </h3>
 
                   {/* Description */}
                   <p className="text-muted-foreground leading-relaxed">
-                    {benefit.description}
+                    {feature.description}
                   </p>
                 </div>
               )
@@ -98,7 +99,7 @@ function ValueProposition() {
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">100%</div>
-              <div className="text-muted-foreground">SEBON Compliant</div>
+              <div className="text-muted-foreground">Secure Platform</div>
             </div>
           </div>
         </div>

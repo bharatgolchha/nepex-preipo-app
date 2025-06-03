@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Building2,
-  Calendar,
   DollarSign,
   Users,
   FileText,
@@ -17,13 +16,14 @@ import {
   Share2,
   Clock,
   Target,
-  BarChart3
+  Info
 } from 'lucide-react';
 
 // Sample offering details data
 const offeringData = {
   id: 1,
   companyName: 'TechCo Nepal Pvt. Ltd.',
+  logo: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=80&h=80&fit=crop&crop=entropy&auto=format&q=60',
   sector: 'Technology',
   tagline: 'Leading the digital transformation in Nepal',
   description: `TechCo Nepal is a pioneering software development company specializing in fintech solutions for the Nepalese market. Founded in 2018, we have rapidly grown to become one of the leading technology companies in Nepal, serving over 50,000 customers through our various digital platforms.
@@ -41,15 +41,11 @@ const offeringData = {
   
   investment: {
     minInvestment: 10000,
-    maxInvestment: 500000,
+    maxInvestment: 1000000,
     targetRaise: 50000000,
-    raisedAmount: 35000000,
-    preIPOValuation: 200000000,
-    sharePrice: 1000,
+    currentRaised: 35000000,
     expectedIPODate: '2026-06-30',
-    closingDate: '2025-03-15',
-    investorsCount: 156,
-    spvStructure: 'Each SPV unit represents 10 shares'
+    investmentStructure: 'Each investment unit represents 10 shares'
   },
   
   highlights: [
@@ -88,9 +84,9 @@ const OfferingDetails: React.FC = () => {
   const [investmentAmount, setInvestmentAmount] = useState('');
   const [showInvestmentModal, setShowInvestmentModal] = useState(false);
   
-  const percentageRaised = (offeringData.investment.raisedAmount / offeringData.investment.targetRaise) * 100;
-  const spvUnits = investmentAmount ? Math.floor(Number(investmentAmount) / 10000) : 0;
-  const shareCount = spvUnits * 10;
+  const percentageRaised = (offeringData.investment.currentRaised / offeringData.investment.targetRaise) * 100;
+  const investmentUnits = investmentAmount ? Math.floor(Number(investmentAmount) / 10000) : 0;
+  const shareCount = investmentUnits * 10;
 
   const handleInvest = () => {
     if (Number(investmentAmount) >= offeringData.investment.minInvestment) {
@@ -118,18 +114,33 @@ const OfferingDetails: React.FC = () => {
             {/* Company Header */}
             <Card className="p-6">
               <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">{offeringData.companyName}</h1>
-                  <p className="text-lg text-gray-600 mt-1">{offeringData.tagline}</p>
-                  <div className="flex items-center gap-4 mt-3">
-                    <span className="flex items-center text-gray-600">
-                      <Building2 className="h-4 w-4 mr-1" />
-                      {offeringData.sector}
-                    </span>
-                    <span className="flex items-center text-gray-600">
-                      <Users className="h-4 w-4 mr-1" />
-                      {offeringData.financials.employeeCount} employees
-                    </span>
+                <div className="flex items-start gap-4">
+                  {/* Company Logo */}
+                  <div className="flex-shrink-0">
+                    <img
+                      src={offeringData.logo}
+                      alt={`${offeringData.companyName} logo`}
+                      className="w-16 h-16 rounded-xl object-cover border-2 border-gray-200"
+                      onError={(e) => {
+                        // Fallback to a placeholder if image fails to load
+                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(offeringData.companyName)}&size=64&background=f3f4f6&color=374151&format=svg`;
+                      }}
+                    />
+                  </div>
+                  {/* Company Info */}
+                  <div>
+                    <h1 className="text-3xl font-bold text-gray-900">{offeringData.companyName}</h1>
+                    <p className="text-lg text-gray-600 mt-1">{offeringData.tagline}</p>
+                    <div className="flex items-center gap-4 mt-3">
+                      <span className="flex items-center text-gray-600">
+                        <Building2 className="h-4 w-4 mr-1" />
+                        {offeringData.sector}
+                      </span>
+                      <span className="flex items-center text-gray-600">
+                        <Users className="h-4 w-4 mr-1" />
+                        {offeringData.financials.employeeCount} employees
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <Button variant="outline" size="sm">
@@ -266,7 +277,7 @@ const OfferingDetails: React.FC = () => {
                 </div>
                 <div className="flex justify-between text-sm mt-2">
                   <span className="text-gray-600">
-                    NPR {(offeringData.investment.raisedAmount / 10000000).toFixed(1)} Cr
+                    NPR {(offeringData.investment.currentRaised / 10000000).toFixed(1)} Cr
                   </span>
                   <span className="text-gray-600">
                     of {(offeringData.investment.targetRaise / 10000000).toFixed(1)} Cr
@@ -286,30 +297,23 @@ const OfferingDetails: React.FC = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600 flex items-center">
                     <Target className="h-4 w-4 mr-1" />
-                    Pre-IPO Valuation
+                    Investment Units
                   </span>
-                  <span className="font-semibold">NPR {(offeringData.investment.preIPOValuation / 10000000).toFixed(0)} Cr</span>
+                  <span className="font-semibold">{investmentUnits}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 flex items-center">
                     <Users className="h-4 w-4 mr-1" />
-                    Investors
+                    Share Count
                   </span>
-                  <span className="font-semibold">{offeringData.investment.investorsCount}</span>
+                  <span className="font-semibold">{shareCount}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 flex items-center">
                     <Clock className="h-4 w-4 mr-1" />
-                    Closing Date
-                  </span>
-                  <span className="font-semibold">{new Date(offeringData.investment.closingDate).toLocaleDateString()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 flex items-center">
-                    <Calendar className="h-4 w-4 mr-1" />
                     Expected IPO
                   </span>
-                  <span className="font-semibold">{new Date(offeringData.investment.expectedIPODate).getFullYear()}</span>
+                  <span className="font-semibold">{new Date(offeringData.investment.expectedIPODate).toLocaleDateString()}</span>
                 </div>
               </div>
 
@@ -331,8 +335,8 @@ const OfferingDetails: React.FC = () => {
                 {investmentAmount && Number(investmentAmount) >= offeringData.investment.minInvestment && (
                   <div className="bg-blue-50 rounded-lg p-3 mb-4 text-sm">
                     <div className="flex justify-between mb-1">
-                      <span className="text-gray-700">SPV Units:</span>
-                      <span className="font-medium">{spvUnits}</span>
+                      <span className="text-gray-700">Investment Units:</span>
+                      <span className="font-medium">{investmentUnits}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">Share Count:</span>
@@ -358,15 +362,15 @@ const OfferingDetails: React.FC = () => {
               </div>
             </Card>
 
-            {/* SPV Structure Info */}
+            {/* Investment Structure Info */}
             <Card className="p-4 bg-blue-50 border-blue-200">
               <div className="flex items-start space-x-3">
-                <BarChart3 className="h-5 w-5 text-blue-600 mt-0.5" />
+                <Info className="h-5 w-5 text-blue-600 mt-0.5" />
                 <div>
-                  <h3 className="font-medium text-blue-900">SPV Structure</h3>
-                  <p className="text-sm text-blue-800 mt-1">{offeringData.investment.spvStructure}</p>
-                  <p className="text-xs text-blue-700 mt-2">
-                    Minimum investment of NPR 10,000 = 1 SPV unit
+                  <h3 className="font-medium text-blue-900">Investment Structure</h3>
+                  <p className="text-sm text-blue-800 mt-1">{offeringData.investment.investmentStructure}</p>
+                  <p className="text-sm text-blue-800 mt-1">
+                    Minimum investment of NPR 10,000 = 1 investment unit
                   </p>
                 </div>
               </div>
@@ -390,8 +394,8 @@ const OfferingDetails: React.FC = () => {
                 <span className="font-medium">NPR {Number(investmentAmount).toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">SPV Units:</span>
-                <span className="font-medium">{spvUnits}</span>
+                <span className="text-gray-600">Investment Units:</span>
+                <span className="font-medium">{investmentUnits}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Lock-in Period:</span>

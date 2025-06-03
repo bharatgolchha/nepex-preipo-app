@@ -40,9 +40,8 @@ function DualCTA() {
                 For Investors
               </h3>
               
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                Start your pre-IPO investment journey with as little as NPR 10,000. 
-                Access exclusive opportunities and grow your wealth through our secure SPV pooling mechanism.
+              <p className="text-lg text-muted-foreground mb-8">
+                Access exclusive opportunities and grow your wealth through our secure investment platform.
               </p>
               
               <div className="space-y-4 mb-8">
@@ -52,7 +51,7 @@ function DualCTA() {
                 </div>
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
-                  <span className="text-sm text-foreground">SEBON compliant & secure</span>
+                  <span className="text-sm text-foreground">Secure & regulated platform</span>
                 </div>
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
@@ -127,7 +126,7 @@ function DualCTA() {
               </h3>
               <div className="grid md:grid-cols-3 gap-6 text-sm">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-2">SEBON</div>
+                  <div className="text-2xl font-bold text-primary mb-2">Secure</div>
                   <div className="text-muted-foreground">Fully Regulated</div>
                 </div>
                 <div className="text-center">

@@ -56,9 +56,9 @@ function OpportunityPreview() {
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
               Current Investment Opportunities
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
               Explore curated pre-IPO opportunities from verified companies across different sectors.
-              Start investing from NPR 10,000 through our SPV pooling mechanism.
+              Start investing from NPR 10,000 through our secure investment platform.
             </p>
           </div>
 

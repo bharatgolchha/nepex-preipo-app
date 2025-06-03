@@ -1,4 +1,4 @@
-import { ArrowRight, Shield, TrendingUp, Users } from 'lucide-react'
+import { ArrowRight, Shield, TrendingUp, Users, CheckCircle } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
 
@@ -24,27 +24,23 @@ function HeroSection() {
         <div className="max-w-4xl mx-auto text-center">
           {/* Trust indicators with better contrast */}
           <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
-            <div className="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium shadow-sm border border-green-200">
-              <Shield className="w-4 h-4" />
-              SEBON Compliant
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium shadow-sm border border-blue-200">
-              <Users className="w-4 h-4" />
-              500+ Investors
+            <div className="flex items-center space-x-3 text-sm text-muted-foreground">
+              <CheckCircle className="h-4 w-4 text-green-500" />
+              <span className="text-sm font-medium text-foreground">Secure & regulated platform</span>
             </div>
           </div>
           
           {/* Main headline - simplified for troubleshooting */}
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-black">
-            Democratizing Pre-IPO Investments in Nepal
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+            Invest in Nepal's 
+            <span className="text-primary"> Pre-IPO</span> Future
           </h1>
           
           {/* Subheadline with better contrast */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed font-medium">
-            Start investing from{' '}
-            <span className="font-bold text-primary bg-primary/10 px-2 py-1 rounded">NPR 10,000</span>{' '}
-            through secure SPV pooling. Access exclusive pre-IPO opportunities
-            before they go public.
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl">
+            Access exclusive pre-IPO investment opportunities from Nepal's promising companies
+            through secure investment platform. Access exclusive pre-IPO opportunities
+            from NPR 10,000 onwards.
           </p>
           
           {/* Key benefits with improved visibility */}
@@ -55,11 +51,11 @@ function HeroSection() {
             </div>
             <div className="flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-sm rounded-lg border border-border shadow-sm">
               <Shield className="w-4 h-4 text-blue-600" />
-              <span className="text-sm font-medium text-foreground">SEBON regulated & secure</span>
+              <span className="text-sm font-medium text-foreground">Secure & regulated platform</span>
             </div>
             <div className="flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-sm rounded-lg border border-border shadow-sm">
               <Users className="w-4 h-4 text-purple-600" />
-              <span className="text-sm font-medium text-foreground">SPV pooling mechanism</span>
+              <span className="text-sm font-medium text-foreground">Investment pooling mechanism</span>
             </div>
           </div>
           
@@ -79,10 +75,12 @@ function HeroSection() {
           </div>
           
           {/* Social proof with better visibility */}
-          <div className="inline-block px-6 py-3 bg-background/60 backdrop-blur-sm rounded-full border border-border shadow-sm">
-            <p className="text-sm text-muted-foreground font-medium">
-              Trusted by investors • Backed by leading companies • SEBON compliant platform
-            </p>
+          <div className="text-center text-sm text-muted-foreground space-x-1">
+            <span>Trusted by investors</span>
+            <span>•</span>
+            <span>Backed by leading companies</span>
+            <span>•</span>
+            <span>Secure investment platform</span>
           </div>
         </div>
       </div>

@@ -1,12 +1,39 @@
-import { BookOpen, PlayCircle, FileText, Users, ArrowRight, Clock } from 'lucide-react'
+import { BookOpen, Video, FileText, ArrowRight, Clock, Users } from 'lucide-react'
 import { Button } from '../ui/button'
 
 /**
- * Education Hub section showcasing learning resources.
- * 
- * Highlights educational content about pre-IPO investing,
- * SPV model, and investment strategies for Nepal market.
+ * EducationHub component for investor education
+ * Features articles, guides, FAQs, and educational content
+ * Investment strategies, risk management, and platform guidance for Nepal market.
  */
+
+const faqs = [
+  {
+    question: "What is the minimum investment amount?",
+    answer: "You can start investing with as little as NPR 10,000 through our investment platform."
+  },
+  {
+    question: "What are the risks involved?",
+    answer: "Pre-IPO investments carry higher risks but also potential for higher returns. Please read our risk disclosure carefully."
+  },
+  {
+    question: "What is the lock-in period?",
+    answer: "Pre-IPO investments typically have a 3-year lock-in period before you can exit."
+  },
+  {
+    question: "What is investment pooling?",
+    answer: "Investment pooling allows multiple small investors to combine their investments to participate in larger pre-IPO opportunities."
+  },
+  {
+    question: "How do I track my investments?",
+    answer: "You can monitor all your investments through your personalized dashboard with real-time updates."
+  },
+  {
+    question: "Is my investment secure?",
+    answer: "Yes, we use bank-grade security and maintain transparency in all investment processes."
+  }
+];
+
 function EducationHub() {
   const educationResources = [
     {
@@ -19,34 +46,19 @@ function EducationHub() {
     },
     {
       type: "Video",
-      icon: PlayCircle,
-      title: "How SPV Pooling Works",
-      description: "Visual explanation of Special Purpose Vehicle pooling mechanism and micro-investments.",
+      icon: Video,
+      title: "Investment Pooling Guide",
+      description: "Visual explanation of investment pooling mechanism and micro-investments.",
       readTime: "5 min watch",
       category: "Intermediate"
     },
     {
       type: "Article",
       icon: FileText,
-      title: "SEBON Compliance Guide",
-      description: "Understanding regulatory requirements and compliance for pre-IPO investments in Nepal.",
+      title: "Risk Management Guide",
+      description: "Understanding risk assessment and management strategies for pre-IPO investments in Nepal.",
       readTime: "6 min read",
       category: "Advanced"
-    }
-  ]
-
-  const faqs = [
-    {
-      question: "What is the minimum investment amount?",
-      answer: "You can start investing with as little as NPR 10,000 through our SPV pooling mechanism."
-    },
-    {
-      question: "How does the 3-year lock-in period work?",
-      answer: "As per SEBON regulations, pre-IPO investments have a mandatory 3-year lock-in period before you can exit."
-    },
-    {
-      question: "What is SPV pooling?",
-      answer: "SPV (Special Purpose Vehicle) pooling allows multiple small investors to combine their investments to participate in larger pre-IPO opportunities."
     }
   ]
 
@@ -65,7 +77,7 @@ function EducationHub() {
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Master pre-IPO investing with our comprehensive educational resources. 
-              Learn about SPV pooling, regulatory compliance, and investment strategies.
+              Learn about investment pooling, risk management, and investment strategies.
             </p>
           </div>
 
@@ -173,10 +185,10 @@ function EducationHub() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground mb-1">
-                      SPV Pooling Mechanism
+                      Investment Pooling Mechanism
                     </h4>
                     <p className="text-muted-foreground text-sm">
-                      Understand how micro-investments work through SPV pooling
+                      Understand how micro-investments work through investment pooling
                     </p>
                   </div>
                 </div>

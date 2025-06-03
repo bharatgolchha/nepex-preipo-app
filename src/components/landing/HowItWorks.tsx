@@ -1,4 +1,4 @@
-import { UserCheck, Search, DollarSign, PieChart, ArrowRight } from 'lucide-react'
+import { UserPlus, FileCheck, DollarSign, TrendingUp, ArrowRight } from 'lucide-react'
 
 /**
  * How It Works section explaining the investment process.
@@ -7,49 +7,57 @@ import { UserCheck, Search, DollarSign, PieChart, ArrowRight } from 'lucide-reac
  * with clear visual indicators and descriptions.
  */
 function HowItWorks() {
-  const investorSteps = [
+  const steps = [
     {
-      icon: UserCheck,
-      title: "Register & Complete KYC",
-      description: "Sign up and complete your Know Your Customer verification as per SEBON requirements.",
-      detail: "Quick 24-hour verification process"
+      icon: UserPlus,
+      title: "Sign Up & Verify",
+      description: "Sign up and complete your Know Your Customer verification process.",
+      color: "bg-blue-500"
     },
     {
-      icon: Search,
-      title: "Browse Opportunities",
+      icon: FileCheck,
+      title: "Browse Opportunities", 
       description: "Explore curated pre-IPO investment opportunities from verified companies.",
-      detail: "Detailed company profiles & financials"
+      color: "bg-green-500"
     },
     {
       icon: DollarSign,
-      title: "Invest Through SPV",
-      description: "Invest from NPR 10,000 onwards through our Special Purpose Vehicle pooling mechanism.",
-      detail: "Secure payment & instant confirmation"
+      title: "Make Investment",
+      description: "Invest from NPR 10,000 onwards through our secure investment platform.",
+      color: "bg-purple-500"
     },
     {
-      icon: PieChart,
-      title: "Track Your Portfolio",
-      description: "Monitor your investments and SPV units through your personalized dashboard.",
-      detail: "Real-time updates & reporting"
+      icon: TrendingUp,
+      title: "Track Portfolio",
+      description: "Monitor your investments and track performance through your personalized dashboard.",
+      color: "bg-orange-500"
     }
   ]
 
   const companySteps = [
     {
-      title: "Submit Application",
-      description: "Apply to list your pre-IPO offering with required documentation."
+      icon: UserPlus,
+      title: "Register Company",
+      description: "Create your company profile and complete verification process.",
+      color: "bg-blue-500"
     },
     {
-      title: "Due Diligence",
-      description: "Our team conducts thorough verification and compliance checks."
+      icon: FileCheck,
+      title: "Submit Documentation",
+      description: "Upload required business documents and financial statements.",
+      color: "bg-green-500"
     },
     {
-      title: "Get Listed",
-      description: "Your offering goes live to our network of investors."
+      icon: DollarSign,
+      title: "Create Offering",
+      description: "Launch your pre-IPO offering with detailed terms and conditions.",
+      color: "bg-purple-500"
     },
     {
-      title: "Raise Capital",
-      description: "Receive funding from multiple investors through SPV pooling."
+      icon: TrendingUp,
+      title: "Receive Funding",
+      description: "Receive funding from multiple investors through our secure platform.",
+      color: "bg-orange-500"
     }
   ]
 
@@ -75,12 +83,12 @@ function HowItWorks() {
             </h3>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {investorSteps.map((step, index) => {
+              {steps.map((step, index) => {
                 const IconComponent = step.icon
                 return (
                   <div key={index} className="relative group">
                     {/* Connection line */}
-                    {index < investorSteps.length - 1 && (
+                    {index < steps.length - 1 && (
                       <div className="hidden lg:block absolute top-12 left-full w-full z-10">
                         <ArrowRight className="w-6 h-6 text-primary/30 mx-auto" />
                       </div>
@@ -104,9 +112,6 @@ function HowItWorks() {
                       <p className="text-muted-foreground mb-3 leading-relaxed">
                         {step.description}
                       </p>
-                      <div className="text-sm text-primary font-medium">
-                        {step.detail}
-                      </div>
                     </div>
                   </div>
                 )
