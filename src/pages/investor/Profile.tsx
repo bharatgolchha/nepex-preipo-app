@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useAuth } from '@/store/authContext';
 import {
   User,
   MapPin,
@@ -13,7 +14,8 @@ import {
   AlertCircle,
   Edit2,
   Save,
-  X
+  X,
+  Mail
 } from 'lucide-react';
 
 // Sample user data
@@ -67,6 +69,7 @@ const userData = {
 };
 
 const Profile: React.FC = () => {
+  const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState(userData);
   const [activeSection, setActiveSection] = useState<'personal' | 'investment' | 'security' | 'preferences'>('personal');
@@ -180,17 +183,33 @@ const Profile: React.FC = () => {
                     <Input
                       id="email"
                       type="email"
-                      value={editedData.personalInfo.email}
+                      value={user?.email || editedData.personalInfo.email}
                       disabled={!isEditing}
                       onChange={(e) => setEditedData({
                         ...editedData,
                         personalInfo: { ...editedData.personalInfo, email: e.target.value }
                       })}
                     />
-                    {userData.accountStatus.emailVerified && (
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                    )}
+                    <div className="flex items-center gap-1">
+                      {user?.emailVerified ? (
+                        <>
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                          <span className="text-xs text-green-600">Verified</span>
+                        </>
+                      ) : (
+                        <>
+                          <AlertCircle className="h-5 w-5 text-yellow-600" />
+                          <span className="text-xs text-yellow-600">Not verified</span>
+                        </>
+                      )}
+                    </div>
                   </div>
+                  {!user?.emailVerified && (
+                    <p className="mt-1 text-sm text-yellow-600 flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      Please check your email and click the verification link
+                    </p>
+                  )}
                 </div>
 
                 <div>
