@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useAdminAuth } from '@/store/adminAuthContext';
+import { useDatabaseStatus } from '@/hooks/useDatabase';
 import {
   Building2,
   UserCheck,
@@ -13,7 +14,12 @@ import {
   CheckCircle,
   ArrowRight,
   Users,
-  Eye
+  Eye,
+  Plus,
+  Settings,
+  Database,
+  Wifi,
+  WifiOff
 } from 'lucide-react';
 
 // Mock data for dashboard
@@ -88,17 +94,46 @@ const pendingTasks = [
 
 const AdminDashboard: React.FC = () => {
   const { adminUser, hasPermission } = useAdminAuth();
+  const { isConnected, isUsingSupabase, connectionType } = useDatabaseStatus();
+
+  console.log('🏠 Admin Dashboard Loading:', {
+    adminUser: adminUser?.name,
+    isConnected,
+    isUsingSupabase,
+    connectionType
+  })
+
+  const getConnectionStatusColor = () => {
+    if (isConnected === null) return 'text-gray-500'
+    if (isConnected) return isUsingSupabase ? 'text-green-600' : 'text-blue-600'
+    return 'text-red-600'
+  };
+
+  const getConnectionIcon = () => {
+    if (isConnected === null) return <Clock className="h-4 w-4" />
+    if (isConnected) return <Wifi className="h-4 w-4" />
+    return <WifiOff className="h-4 w-4" />
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Welcome Header */}
+      {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
-          Welcome back, {adminUser?.name.split(' ')[0]}
-        </h1>
-        <p className="text-gray-600 mt-2">
-          Here's what's happening with your companies today
-        </p>
+        <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-gray-600">Welcome back, {adminUser?.name.split(' ')[0]}! Here's what's happening with NepEx.</p>
+          
+          {/* Database Status */}
+          <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${getConnectionStatusColor()}`}>
+            <Database className="h-4 w-4" />
+            {getConnectionIcon()}
+            <span className="text-sm font-medium">
+              {isConnected === null ? 'Checking...' : 
+               isConnected ? `${connectionType} Connected` : 
+               `${connectionType} Disconnected`}
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Stats Grid */}
@@ -230,17 +265,17 @@ const AdminDashboard: React.FC = () => {
       {/* Quick Actions */}
       <div className="mt-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {hasPermission('companies.create') && (
             <Link to="/admin/companies/create">
-              <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+              <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer border-blue-200 bg-blue-50">
                 <div className="flex items-center space-x-3">
-                  <div className="p-3 bg-blue-100 rounded-lg">
-                    <Building2 className="h-6 w-6 text-blue-600" />
+                  <div className="p-2 bg-blue-100 rounded-lg">
+                    <Plus className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">Add New Company</h3>
-                    <p className="text-sm text-gray-600">Create a new company profile</p>
+                    <h3 className="font-medium text-blue-900">Add Company</h3>
+                    <p className="text-sm text-blue-600">Register new company</p>
                   </div>
                 </div>
               </Card>
@@ -249,10 +284,10 @@ const AdminDashboard: React.FC = () => {
 
           {hasPermission('documents.verify') && (
             <Link to="/admin/documents">
-              <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+              <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer">
                 <div className="flex items-center space-x-3">
-                  <div className="p-3 bg-orange-100 rounded-lg">
-                    <FileCheck className="h-6 w-6 text-orange-600" />
+                  <div className="p-2 bg-orange-100 rounded-lg">
+                    <FileCheck className="h-5 w-5 text-orange-600" />
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900">Review Documents</h3>
@@ -265,10 +300,10 @@ const AdminDashboard: React.FC = () => {
 
           {hasPermission('users.manage') && (
             <Link to="/admin/users">
-              <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+              <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer">
                 <div className="flex items-center space-x-3">
-                  <div className="p-3 bg-purple-100 rounded-lg">
-                    <Users className="h-6 w-6 text-purple-600" />
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <Users className="h-5 w-5 text-purple-600" />
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900">Manage Users</h3>
@@ -278,6 +313,18 @@ const AdminDashboard: React.FC = () => {
               </Card>
             </Link>
           )}
+
+          <Card className="p-4 hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-orange-100 rounded-lg">
+                <Settings className="h-5 w-5 text-orange-600" />
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-900">System Settings</h3>
+                <p className="text-sm text-gray-600">Configure platform</p>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     </div>
