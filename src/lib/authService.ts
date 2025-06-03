@@ -12,6 +12,7 @@ export interface AuthUser {
   id: string
   email: string
   role: 'investor' | 'company' | 'admin'
+  emailVerified: boolean
   profile?: {
     firstName: string
     lastName: string
@@ -158,6 +159,7 @@ export class AuthService {
         id: authData.user.id,
         email: data.email,
         role: 'investor',
+        emailVerified: !!authData.user.email_confirmed_at,
         profile: {
           firstName,
           lastName,
@@ -219,6 +221,7 @@ export class AuthService {
         id: userProfile.id,
         email: userProfile.email,
         role: userProfile.role,
+        emailVerified: !!data.user.email_confirmed_at,
         profile: userProfile.user_profiles ? {
           firstName: userProfile.user_profiles.first_name || '',
           lastName: userProfile.user_profiles.last_name || '',
@@ -283,6 +286,7 @@ export class AuthService {
         id: userProfile.id,
         email: userProfile.email,
         role: userProfile.role,
+        emailVerified: !!session.user.email_confirmed_at,
         profile: userProfile.user_profiles ? {
           firstName: userProfile.user_profiles.first_name || '',
           lastName: userProfile.user_profiles.last_name || '',
