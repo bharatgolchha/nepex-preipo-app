@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,10 +14,77 @@ import {
   ChevronDown
 } from 'lucide-react';
 
-// Sample offerings data
-const allOfferings = [
+// Interface for companies from localStorage
+interface Company {
+  id: string;
+  name: string;
+  registrationNumber: string;
+  sector: string;
+  status: 'pending' | 'active' | 'suspended' | 'rejected';
+  createdDate: string;
+  contactPerson: string;
+  email: string;
+  phone: string;
+  documentsStatus: 'pending' | 'approved' | 'rejected' | 'incomplete';
+  lastActivity: string;
+  assignedManager: string;
+  fundingTarget?: number;
+  kycStatus: 'pending' | 'approved' | 'rejected';
+  logo?: string;
+}
+
+// Interface for offering display
+interface Offering {
+  id: string;
+  companyName: string;
+  logo: string;
+  sector: string;
+  description: string;
+  minInvestment: number;
+  maxInvestment: number;
+  targetRaise: number;
+  raisedAmount: number;
+  preIPOValuation: number;
+  expectedIPODate: string;
+  closingDate: string;
+  investorsCount: number;
+  status: string;
+  highlights: string[];
+}
+
+// Function to convert company data to offering format
+const convertCompanyToOffering = (company: Company): Offering => {
+  // Generate some realistic data based on company info
+  const baseAmount = Math.floor(Math.random() * 100000000) + 20000000; // 20M - 120M
+  const raisedPercentage = Math.random() * 0.8 + 0.1; // 10% - 90%
+  
+  return {
+    id: company.id,
+    companyName: company.name,
+    logo: company.logo || `https://ui-avatars.com/api/?name=${encodeURIComponent(company.name)}&size=64&background=f3f4f6&color=374151&format=svg`,
+    sector: company.sector,
+    description: `${company.name} is an innovative company in the ${company.sector.toLowerCase()} sector, offering exciting pre-IPO investment opportunities.`,
+    minInvestment: 10000,
+    maxInvestment: 500000,
+    targetRaise: company.fundingTarget || baseAmount,
+    raisedAmount: Math.floor((company.fundingTarget || baseAmount) * raisedPercentage),
+    preIPOValuation: (company.fundingTarget || baseAmount) * (Math.random() * 3 + 2), // 2x - 5x of target raise
+    expectedIPODate: new Date(Date.now() + Math.random() * 365 * 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Random date within 2 years
+    closingDate: new Date(Date.now() + Math.random() * 180 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Random date within 6 months
+    investorsCount: Math.floor(Math.random() * 200) + 20,
+    status: 'active',
+    highlights: [
+      'Verified by NepEx',
+      'Strong market position',
+      'Experienced management team'
+    ]
+  };
+};
+
+// Fallback mock data for demo purposes
+const fallbackOfferings: Offering[] = [
   {
-    id: 1,
+    id: 'demo-1',
     companyName: 'TechCo Nepal Pvt. Ltd.',
     logo: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
     sector: 'Technology',
@@ -34,7 +101,7 @@ const allOfferings = [
     highlights: ['20% YoY growth', 'Profitable since 2022', 'Market leader in segment']
   },
   {
-    id: 2,
+    id: 'demo-2',
     companyName: 'Green Energy Solutions',
     logo: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
     sector: 'Renewable Energy',
@@ -49,74 +116,93 @@ const allOfferings = [
     investorsCount: 89,
     status: 'active',
     highlights: ['Government contracts', 'International partnerships', '15MW capacity']
-  },
-  {
-    id: 3,
-    companyName: 'HealthPlus Hospitals',
-    logo: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
-    sector: 'Healthcare',
-    description: 'Multi-specialty hospital chain with 5 locations across major cities in Nepal.',
-    minInvestment: 50000,
-    maxInvestment: 2000000,
-    targetRaise: 150000000,
-    raisedAmount: 120000000,
-    preIPOValuation: 800000000,
-    expectedIPODate: '2025-12-31',
-    closingDate: '2025-02-28',
-    investorsCount: 234,
-    status: 'active',
-    highlights: ['300+ bed capacity', 'JCI accreditation', 'Expansion plans']
-  },
-  {
-    id: 4,
-    companyName: 'EduTech Nepal',
-    logo: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
-    sector: 'Education Technology',
-    description: 'Digital learning platform serving 100,000+ students across Nepal with interactive courses.',
-    minInvestment: 10000,
-    maxInvestment: 250000,
-    targetRaise: 30000000,
-    raisedAmount: 12000000,
-    preIPOValuation: 120000000,
-    expectedIPODate: '2027-03-31',
-    closingDate: '2025-05-15',
-    investorsCount: 67,
-    status: 'active',
-    highlights: ['100k+ active users', 'B2B partnerships', 'AI-powered learning']
-  },
-  {
-    id: 5,
-    companyName: 'AgroTech Innovations',
-    logo: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=64&h=64&fit=crop&crop=entropy&auto=format&q=60',
-    sector: 'Agriculture',
-    description: 'Modern farming solutions including hydroponics and smart irrigation systems.',
-    minInvestment: 15000,
-    maxInvestment: 500000,
-    targetRaise: 40000000,
-    raisedAmount: 38000000,
-    preIPOValuation: 180000000,
-    expectedIPODate: '2026-09-30',
-    closingDate: '2025-01-31',
-    investorsCount: 145,
-    status: 'closing_soon',
-    highlights: ['Export potential', 'Sustainable farming', 'Government subsidies']
   }
 ];
-
-const sectors = ['All', 'Technology', 'Healthcare', 'Renewable Energy', 'Education Technology', 'Agriculture'];
 
 const Offerings: React.FC = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSector, setSelectedSector] = useState('All');
   const [showFilters, setShowFilters] = useState(false);
+  const [offerings, setOfferings] = useState<Offering[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredOfferings = allOfferings.filter(offering => {
+  // Load companies from localStorage and convert to offerings
+  useEffect(() => {
+    const loadOfferings = () => {
+      console.log('Offerings: Loading companies from localStorage...');
+      const savedCompanies = localStorage.getItem('nepex_companies');
+      
+      if (savedCompanies) {
+        try {
+          const companies: Company[] = JSON.parse(savedCompanies);
+          console.log('Loaded companies:', companies);
+          
+          // Filter for active companies only and convert to offerings
+          const activeCompanies = companies.filter(company => 
+            company.status === 'active' && 
+            company.documentsStatus === 'approved' &&
+            company.kycStatus === 'approved'
+          );
+          
+          console.log('Active companies for offerings:', activeCompanies);
+          
+          const companyOfferings = activeCompanies.map(convertCompanyToOffering);
+          
+          // Combine with fallback offerings for demo
+          const allOfferings = [...companyOfferings, ...fallbackOfferings];
+          
+          console.log('Total offerings available:', allOfferings.length);
+          setOfferings(allOfferings);
+        } catch (error) {
+          console.error('Error loading companies:', error);
+          setOfferings(fallbackOfferings);
+        }
+      } else {
+        console.log('No companies found, using fallback offerings');
+        setOfferings(fallbackOfferings);
+      }
+      
+      setLoading(false);
+    };
+
+    loadOfferings();
+
+    // Listen for storage changes
+    const handleStorageChange = () => {
+      console.log('Storage changed, reloading offerings...');
+      loadOfferings();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('refreshCompanies', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('refreshCompanies', handleStorageChange);
+    };
+  }, []);
+
+  // Get unique sectors from offerings
+  const sectors = ['All', ...Array.from(new Set(offerings.map(o => o.sector)))];
+
+  const filteredOfferings = offerings.filter(offering => {
     const matchesSearch = offering.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          offering.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesSector = selectedSector === 'All' || offering.sector === selectedSector;
     return matchesSearch && matchesSector;
   });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading investment opportunities...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

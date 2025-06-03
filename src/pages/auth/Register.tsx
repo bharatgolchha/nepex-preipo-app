@@ -58,8 +58,8 @@ const Register: React.FC = () => {
     const newErrors: typeof errors = {};
     
     if (step === 1) {
-      if (!userType) {
-        newErrors.general = 'Please select user type';
+      if (userType !== 'investor') {
+        newErrors.general = 'Please select investor account type';
       }
     } else if (step === 2) {
       if (!formData.email) newErrors.email = 'Email is required';
@@ -73,14 +73,8 @@ const Register: React.FC = () => {
       
       if (!formData.phone) newErrors.phone = 'Phone number is required';
     } else if (step === 3) {
-      if (userType === 'investor') {
-        if (!formData.fullName) newErrors.fullName = 'Full name is required';
-        if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
-      } else {
-        if (!formData.companyName) newErrors.companyName = 'Company name is required';
-        if (!formData.registrationNumber) newErrors.registrationNumber = 'Registration number is required';
-        if (!formData.contactPersonName) newErrors.contactPersonName = 'Contact person name is required';
-      }
+      if (!formData.fullName) newErrors.fullName = 'Full name is required';
+      if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
       
       if (!formData.acceptTerms) newErrors.acceptTerms = 'You must accept the terms and conditions';
     }
@@ -178,31 +172,21 @@ const Register: React.FC = () => {
                   </div>
                 </button>
 
-                <button
-                  onClick={() => setUserType('company')}
-                  className={`w-full p-6 border-2 rounded-lg transition-colors text-left ${
-                    userType === 'company'
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
+                <div className="p-6 border-2 border-gray-200 rounded-lg bg-gray-50">
                   <div className="flex items-start space-x-4">
-                    <Building2 className={`h-12 w-12 ${userType === 'company' ? 'text-blue-500' : 'text-gray-400'}`} />
+                    <Building2 className="h-12 w-12 text-gray-400" />
                     <div>
                       <p className="font-medium text-gray-900">Company</p>
                       <p className="text-sm text-gray-500 mt-1">
-                        Raise pre-IPO funding from verified investors
+                        Company registration is handled by our team. Please contact us at{' '}
+                        <a href="mailto:companies@nepex.com" className="text-blue-600 hover:underline">
+                          companies@nepex.com
+                        </a>{' '}
+                        to get started.
                       </p>
-                      <Link 
-                        to="/auth/company-register" 
-                        className="text-xs text-blue-600 hover:underline mt-2 inline-block"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        Use detailed company registration →
-                      </Link>
                     </div>
                   </div>
-                </button>
+                </div>
               </div>
               
               {errors.general && (
@@ -328,78 +312,34 @@ const Register: React.FC = () => {
             </div>
           )}
 
-          {/* Step 3: Personal/Company Info */}
+          {/* Step 3: Personal Information */}
           {step === 3 && (
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-6">
-                {userType === 'investor' ? 'Personal Information' : 'Company Information'}
-              </h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-6">Personal Information</h3>
               <form onSubmit={(e) => { e.preventDefault(); handleNext(); }} className="space-y-4">
-                {userType === 'investor' ? (
-                  <>
-                    <div>
-                      <Label htmlFor="fullName">Full Name</Label>
-                      <Input
-                        id="fullName"
-                        value={formData.fullName || ''}
-                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        className={errors.fullName ? 'border-red-500' : ''}
-                        placeholder="As per citizenship"
-                      />
-                      {errors.fullName && <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>}
-                    </div>
+                <div>
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <Input
+                    id="fullName"
+                    value={formData.fullName || ''}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    className={errors.fullName ? 'border-red-500' : ''}
+                    placeholder="As per citizenship"
+                  />
+                  {errors.fullName && <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>}
+                </div>
 
-                    <div>
-                      <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                      <Input
-                        id="dateOfBirth"
-                        type="date"
-                        value={formData.dateOfBirth || ''}
-                        onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-                        className={errors.dateOfBirth ? 'border-red-500' : ''}
-                      />
-                      {errors.dateOfBirth && <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth}</p>}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div>
-                      <Label htmlFor="companyName">Company Name</Label>
-                      <Input
-                        id="companyName"
-                        value={formData.companyName || ''}
-                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                        className={errors.companyName ? 'border-red-500' : ''}
-                        placeholder="Registered company name"
-                      />
-                      {errors.companyName && <p className="mt-1 text-sm text-red-600">{errors.companyName}</p>}
-                    </div>
-
-                    <div>
-                      <Label htmlFor="registrationNumber">Registration Number</Label>
-                      <Input
-                        id="registrationNumber"
-                        value={formData.registrationNumber || ''}
-                        onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
-                        className={errors.registrationNumber ? 'border-red-500' : ''}
-                        placeholder="Company registration number"
-                      />
-                      {errors.registrationNumber && <p className="mt-1 text-sm text-red-600">{errors.registrationNumber}</p>}
-                    </div>
-
-                    <div>
-                      <Label htmlFor="contactPersonName">Contact Person Name</Label>
-                      <Input
-                        id="contactPersonName"
-                        value={formData.contactPersonName || ''}
-                        onChange={(e) => setFormData({ ...formData, contactPersonName: e.target.value })}
-                        className={errors.contactPersonName ? 'border-red-500' : ''}
-                        placeholder="Primary contact name"
-                      />
-                      {errors.contactPersonName && <p className="mt-1 text-sm text-red-600">{errors.contactPersonName}</p>}
-                    </div>
-                  </>
-                )}
+                <div>
+                  <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                  <Input
+                    id="dateOfBirth"
+                    type="date"
+                    value={formData.dateOfBirth || ''}
+                    onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
+                    className={errors.dateOfBirth ? 'border-red-500' : ''}
+                  />
+                  {errors.dateOfBirth && <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth}</p>}
+                </div>
 
                 {/* Terms and Conditions */}
                 <div className="mt-6">

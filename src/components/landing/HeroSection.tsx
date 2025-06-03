@@ -67,11 +67,11 @@ function HeroSection() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <Link to="/auth/register">
+            <a href="mailto:companies@nepex.com">
               <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-background/90 backdrop-blur-sm">
                 Join as Company
               </Button>
-            </Link>
+            </a>
           </div>
           
           {/* Social proof with better visibility */}
