@@ -27,14 +27,14 @@ const Navigation: React.FC = () => {
       ];
     }
 
-    if (user?.userType === 'investor') {
+    if (user?.role === 'investor') {
       return [
         { path: '/investor/dashboard', label: 'Dashboard', icon: LayoutDashboard, userType: 'investor' },
         { path: '/investor/offerings', label: 'Browse Offerings', icon: TrendingUp, userType: 'investor' },
         { path: '/investor/portfolio', label: 'My Portfolio', icon: Briefcase, userType: 'investor' },
         { path: '/investor/profile', label: 'Profile', icon: User, userType: 'investor' },
       ];
-    } else if (user?.userType === 'company') {
+    } else if (user?.role === 'company') {
       return [
         { path: '/company/dashboard', label: 'Dashboard', icon: LayoutDashboard, userType: 'company' },
         { path: '/company/profile', label: 'Company Profile', icon: User, userType: 'company' },
@@ -59,7 +59,7 @@ const Navigation: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
             <Link 
-              to={isAuthenticated ? (user?.userType === 'investor' ? '/investor/dashboard' : user?.userType === 'company' ? '/company/dashboard' : '/') : '/'} 
+              to={isAuthenticated ? (user?.role === 'investor' ? '/investor/dashboard' : user?.role === 'company' ? '/company/dashboard' : '/') : '/'} 
               className="text-xl font-bold text-blue-600"
             >
               NepEx
@@ -105,7 +105,7 @@ const Navigation: React.FC = () => {
             ) : (
               <>
                 <span className="text-sm text-gray-600">
-                  Welcome, {user?.userType === 'investor' ? 'Investor' : 'Company'} User
+                  Welcome, {user?.profile?.firstName || user?.email || 'User'}
                 </span>
                 <Button
                   variant="outline"
@@ -162,7 +162,7 @@ const Navigation: React.FC = () => {
               {isAuthenticated && (
                 <div className="pt-4 border-t border-gray-200">
                   <div className="px-3 py-2 text-sm text-gray-600">
-                    Welcome, {user?.userType === 'investor' ? 'Investor' : 'Company'} User
+                    Welcome, {user?.profile?.firstName || user?.email || 'User'}
                   </div>
                   <button
                     onClick={() => {

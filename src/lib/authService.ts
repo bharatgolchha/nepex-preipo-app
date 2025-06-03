@@ -200,11 +200,11 @@ export class AuthService {
           id,
           email,
           role,
+          phone,
           user_profiles (
             first_name,
             last_name,
-            date_of_birth,
-            phone
+            date_of_birth
           )
         `)
         .eq('id', data.user.id)
@@ -222,9 +222,14 @@ export class AuthService {
         profile: userProfile.user_profiles ? {
           firstName: userProfile.user_profiles.first_name || '',
           lastName: userProfile.user_profiles.last_name || '',
-          phone: userProfile.user_profiles.phone || '',
+          phone: userProfile.phone || '',
           dateOfBirth: userProfile.user_profiles.date_of_birth || ''
-        } : undefined
+        } : {
+          firstName: '',
+          lastName: '',
+          phone: userProfile.phone || '',
+          dateOfBirth: ''
+        }
       }
 
       return { success: true, user }
@@ -259,11 +264,11 @@ export class AuthService {
           id,
           email,
           role,
+          phone,
           user_profiles (
             first_name,
             last_name,
-            date_of_birth,
-            phone
+            date_of_birth
           )
         `)
         .eq('id', session.user.id)
@@ -281,9 +286,14 @@ export class AuthService {
         profile: userProfile.user_profiles ? {
           firstName: userProfile.user_profiles.first_name || '',
           lastName: userProfile.user_profiles.last_name || '',
-          phone: userProfile.user_profiles.phone || '',
+          phone: userProfile.phone || '',
           dateOfBirth: userProfile.user_profiles.date_of_birth || ''
-        } : undefined
+        } : {
+          firstName: '',
+          lastName: '',
+          phone: userProfile.phone || '',
+          dateOfBirth: ''
+        }
       }
     } catch (error) {
       console.error('Error getting current user:', error)
