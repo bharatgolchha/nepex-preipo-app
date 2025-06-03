@@ -13,8 +13,17 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requiredUserType,
   requireAuth = true
 }) => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   // If authentication is required but user is not authenticated
   if (requireAuth && !isAuthenticated) {
@@ -22,9 +31,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // If specific user type is required but user doesn't match
-  if (requiredUserType && user?.userType !== requiredUserType) {
+  if (requiredUserType && user?.role !== requiredUserType) {
     // Redirect to appropriate dashboard based on user type
-    const redirectPath = user?.userType === 'investor' ? '/investor/dashboard' : '/company/dashboard';
+    const redirectPath = user?.role === 'investor' ? '/investor/dashboard' : '/company/dashboard';
     return <Navigate to={redirectPath} replace />;
   }
 

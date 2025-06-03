@@ -148,6 +148,8 @@ const InvestorRegister: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
+      console.log('🚀 Starting registration submission...');
+      
       const result = await registerInvestor({
         email: formData.email,
         password: formData.password,
@@ -156,7 +158,10 @@ const InvestorRegister: React.FC = () => {
         dateOfBirth: formData.dateOfBirth
       });
 
+      console.log('📋 Registration result:', result);
+
       if (result.success) {
+        console.log('✅ Registration successful! Navigating to dashboard...');
         // Registration successful - redirect to investor dashboard
         navigate('/investor/dashboard', { 
           state: { 
@@ -165,9 +170,11 @@ const InvestorRegister: React.FC = () => {
           }
         });
       } else {
+        console.error('❌ Registration failed:', result.error);
         setErrors({ general: result.error || 'Registration failed. Please try again.' });
       }
     } catch (error) {
+      console.error('❌ Unexpected registration error:', error);
       setErrors({ general: 'An unexpected error occurred. Please try again.' });
     }
   };
