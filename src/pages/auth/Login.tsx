@@ -13,22 +13,19 @@ import {
   AlertCircle,
   ArrowLeft,
   LogIn,
-  Building2,
-  User
+  Shield
 } from 'lucide-react';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, isLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [userType, setUserType] = useState<'investor' | 'company' | null>(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     rememberMe: false
   });
   const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({});
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,32 +35,20 @@ const Login: React.FC = () => {
     const newErrors: typeof errors = {};
     if (!formData.email) newErrors.email = 'Email is required';
     if (!formData.password) newErrors.password = 'Password is required';
-    if (!userType) {
-      newErrors.general = 'Please select whether you are an investor or company';
-      setErrors(newErrors);
-      return;
-    }
     
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
-    setIsLoading(true);
+    const result = await login(formData.email, formData.password);
     
-    try {
-      await login(formData.email, formData.password, userType);
-      
-      // Navigate based on user type
-      if (userType === 'investor') {
-        navigate('/investor/dashboard');
-      } else {
-        navigate('/company/dashboard');
-      }
-    } catch (error) {
-      setErrors({ general: 'Login failed. Please try again.' });
-    } finally {
-      setIsLoading(false);
+    if (result.success) {
+      // The auth context will automatically redirect based on user role
+      // For now, we can provide a default redirect
+      navigate('/investor/dashboard');
+    } else {
+      setErrors({ general: result.error || 'Login failed. Please try again.' });
     }
   };
 
@@ -90,151 +75,123 @@ const Login: React.FC = () => {
           </div>
         </div>
 
-        {/* User Type Selection */}
-        {!userType && (
-          <Card className="p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">I am a...</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                onClick={() => setUserType('investor')}
-                className="p-6 border-2 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors group"
-              >
-                <User className="h-12 w-12 text-gray-400 group-hover:text-blue-500 mx-auto mb-3" />
-                <p className="font-medium text-gray-900">Investor</p>
-                <p className="text-sm text-gray-500 mt-1">Access investment opportunities</p>
-              </button>
-              <button
-                onClick={() => setUserType('company')}
-                className="p-6 border-2 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors group"
-              >
-                <Building2 className="h-12 w-12 text-gray-400 group-hover:text-blue-500 mx-auto mb-3" />
-                <p className="font-medium text-gray-900">Company</p>
-                <p className="text-sm text-gray-500 mt-1">Raise pre-IPO funding</p>
-              </button>
-            </div>
-          </Card>
-        )}
+        <Card className="p-8">
+          <div className="text-center mb-6">
+            <Shield className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900">Sign In</h3>
+            <p className="text-sm text-gray-600 mt-2">
+              Enter your credentials to access your account
+            </p>
+          </div>
 
-        {/* Login Form */}
-        {userType && (
-          <Card className="p-8">
-            <div className="mb-6">
-              <button
-                onClick={() => setUserType(null)}
-                className="text-sm text-gray-600 hover:text-gray-900 flex items-center"
-              >
-                <ArrowLeft className="h-3 w-3 mr-1" />
-                Change user type
-              </button>
-              <h3 className="text-lg font-medium text-gray-900 mt-2">
-                Sign in as {userType === 'investor' ? 'Investor' : 'Company'}
-              </h3>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {errors.general && (
+              <div className="bg-red-50 border border-red-200 rounded-md p-4 flex items-start">
+                <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 mr-3" />
+                <p className="text-sm text-red-600">{errors.general}</p>
+              </div>
+            )}
+
+            <div>
+              <Label htmlFor="email">Email Address</Label>
+              <div className="mt-1 relative">
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className={`pl-10 ${errors.email ? 'border-red-500' : ''}`}
+                  placeholder="you@example.com"
+                />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              </div>
+              {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {errors.general && (
-                <div className="bg-red-50 border border-red-200 rounded-md p-4 flex items-start">
-                  <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 mr-3" />
-                  <p className="text-sm text-red-600">{errors.general}</p>
-                </div>
-              )}
-
-              <div>
-                <Label htmlFor="email">Email Address</Label>
-                <div className="mt-1 relative">
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className={`pl-10 ${errors.email ? 'border-red-500' : ''}`}
-                    placeholder="you@example.com"
-                  />
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                </div>
-                {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <div className="mt-1 relative">
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className={`pl-10 pr-10 ${errors.password ? 'border-red-500' : ''}`}
+                  placeholder="••••••••"
+                />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
               </div>
+              {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+            </div>
 
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <div className="mt-1 relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className={`pl-10 pr-10 ${errors.password ? 'border-red-500' : ''}`}
-                    placeholder="••••••••"
-                  />
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
-                {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  type="checkbox"
+                  checked={formData.rememberMe}
+                  onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <Label htmlFor="remember-me" className="ml-2 text-sm text-gray-600">
+                  Remember me
+                </Label>
               </div>
+              <Link to="/auth/forgot-password" className="text-sm text-blue-600 hover:text-blue-500">
+                Forgot password?
+              </Link>
+            </div>
 
-              <div className="flex items-center justify-between">
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={isLoading}
+            >
+              {isLoading ? (
                 <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    type="checkbox"
-                    checked={formData.rememberMe}
-                    onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <Label htmlFor="remember-me" className="ml-2 text-sm text-gray-600">
-                    Remember me
-                  </Label>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+                  Signing in...
                 </div>
-                <Link to="/auth/forgot-password" className="text-sm text-blue-600 hover:text-blue-500">
-                  Forgot password?
-                </Link>
+              ) : (
+                <>
+                  <LogIn className="h-5 w-5 mr-2" />
+                  Sign In
+                </>
+              )}
+            </Button>
+
+            {/* Test Info */}
+            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-blue-800 font-medium mb-2">Test the system:</p>
+              <div className="space-y-1 text-sm text-blue-700">
+                <p>Create a new investor account or use existing test data</p>
+                <p className="text-xs text-blue-600 mt-2">
+                  All registrations go to live database with real authentication
+                </p>
               </div>
-
-              <Button
-                type="submit"
-                className="w-full"
-                size="lg"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  'Signing in...'
-                ) : (
-                  <>
-                    <LogIn className="h-5 w-5 mr-2" />
-                    Sign In
-                  </>
-                )}
-              </Button>
-
-              {/* Demo Credentials */}
-              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600 font-medium mb-2">Demo Credentials:</p>
-                <div className="space-y-1 text-sm text-gray-600">
-                  <p><strong>Email:</strong> demo@example.com</p>
-                  <p><strong>Password:</strong> demo123</p>
-                  <p className="text-xs text-gray-500 mt-2">
-                    Note: Any valid email/password works in demo mode
-                  </p>
-                </div>
-              </div>
-            </form>
-
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
-                Don't have an account?{' '}
-                <Link to="/auth/register" className="text-blue-600 hover:text-blue-500 font-medium">
-                  Sign up
-                </Link>
-              </p>
             </div>
-          </Card>
-        )}
+          </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/auth/investor-register" className="text-blue-600 hover:text-blue-500 font-medium">
+                Create investor account
+              </Link>
+            </p>
+            <p className="text-xs text-gray-500 mt-2">
+              Companies are onboarded by admin approval
+            </p>
+          </div>
+        </Card>
       </div>
     </div>
   );

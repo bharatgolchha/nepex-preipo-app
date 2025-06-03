@@ -12,6 +12,7 @@ import LandingPage from './pages/LandingPage'
 // Auth Pages
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
+import InvestorRegister from './pages/auth/InvestorRegister'
 import CompanyRegister from './pages/auth/CompanyRegister'
 
 // Investor Pages
@@ -52,6 +53,7 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/auth/login" element={<Login />} />
               <Route path="/auth/register" element={<Register />} />
+              <Route path="/auth/investor-register" element={<InvestorRegister />} />
               
               {/* Company registration is now admin-only, but keep for existing companies */}
               <Route path="/auth/company-register" element={<CompanyRegister />} />

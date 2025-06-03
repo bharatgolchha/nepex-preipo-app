@@ -53,7 +53,7 @@ function LandingPage() {
                   Sign In
                 </Button>
               </Link>
-              <Link to="/auth/register">
+              <Link to="/auth/investor-register">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                   Get Started
                 </Button>
