@@ -57,7 +57,21 @@ export class AuthService {
 
       console.log('✅ Auth user created:', authData.user.id)
 
+      // 1.5. Sign in the user immediately to establish auth context for RLS
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password
+      })
+
+      if (signInError) {
+        console.error('❌ Auto sign-in error:', signInError)
+        // Continue anyway, we'll try the insert without auth context
+      } else {
+        console.log('✅ User signed in for RLS context')
+      }
+
       // 2. Create user profile in public.users table
+      console.log('📝 Attempting to create user profile for:', authData.user.id)
       const { error: userError } = await supabase
         .from('users')
         .insert({
@@ -72,12 +86,14 @@ export class AuthService {
 
       if (userError) {
         console.error('❌ User profile creation error:', userError)
-        return { success: false, error: 'Failed to create user profile' }
+        console.error('❌ Error details:', JSON.stringify(userError, null, 2))
+        return { success: false, error: 'Failed to create user profile: ' + userError.message }
       }
 
       console.log('✅ User profile created in public.users')
 
       // 3. Create detailed user profile
+      console.log('📝 Attempting to create detailed user profile for:', authData.user.id)
       const { error: profileError } = await supabase
         .from('user_profiles')
         .insert({
@@ -90,12 +106,14 @@ export class AuthService {
 
       if (profileError) {
         console.error('❌ User profile creation error:', profileError)
+        console.error('❌ Profile error details:', JSON.stringify(profileError, null, 2))
         // This is not critical, continue anyway
       } else {
         console.log('✅ Detailed user profile created')
       }
 
       // 4. Initialize KYC status
+      console.log('📝 Attempting to initialize KYC status for:', authData.user.id)
       const { error: kycError } = await supabase
         .from('kyc_status')
         .insert({
@@ -110,12 +128,14 @@ export class AuthService {
 
       if (kycError) {
         console.error('❌ KYC status creation error:', kycError)
+        console.error('❌ KYC error details:', JSON.stringify(kycError, null, 2))
         // This is not critical, continue anyway
       } else {
         console.log('✅ KYC status initialized')
       }
 
       // 5. Create notification for welcome
+      console.log('📝 Attempting to create welcome notification for:', authData.user.id)
       const { error: notificationError } = await supabase
         .from('notifications')
         .insert({
@@ -128,7 +148,10 @@ export class AuthService {
 
       if (notificationError) {
         console.error('❌ Welcome notification error:', notificationError)
+        console.error('❌ Notification error details:', JSON.stringify(notificationError, null, 2))
         // This is not critical, continue anyway
+      } else {
+        console.log('✅ Welcome notification created')
       }
 
       const user: AuthUser = {
