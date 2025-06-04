@@ -9,6 +9,8 @@ interface AuthContextType {
   logout: () => Promise<void>;
   registerInvestor: (data: InvestorRegistrationData) => Promise<{ success: boolean; error?: string }>;
   checkEmailAvailability: (email: string) => Promise<boolean>;
+  // resendEmailVerification disabled for development
+  // resendEmailVerification: (email: string) => Promise<{ success: boolean; error?: string }>;
   setUser: (user: AuthUser | null) => void;
 }
 
@@ -84,8 +86,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       const result = await authService.createInvestorAccount(data);
       
-      if (result.success && result.user) {
-        setUser(result.user);
+      if (result.success) {
+        // If user is returned, set it (auto sign-in)
+        if (result.user) {
+          setUser(result.user);
+        }
         return { success: true };
       } else {
         return { success: false, error: result.error || 'Registration failed' };
@@ -108,6 +113,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // resendEmailVerification disabled for development
+  // const resendEmailVerification = async (email: string): Promise<{ success: boolean; error?: string }> => {
+  //   try {
+  //     return await authService.resendEmailVerification(email);
+  //   } catch (error) {
+  //     console.error('Resend verification error:', error);
+  //     return { success: false, error: 'An unexpected error occurred' };
+  //   }
+  // };
+
   const value: AuthContextType = {
     user,
     isAuthenticated: !!user,
@@ -116,6 +131,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     registerInvestor,
     checkEmailAvailability,
+    // resendEmailVerification, // disabled for development
     setUser
   };
 

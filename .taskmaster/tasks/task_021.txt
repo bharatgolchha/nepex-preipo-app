@@ -1,0 +1,11 @@
+# Task ID: 21
+# Title: Advanced Search and Filtering
+# Status: pending
+# Dependencies: 3
+# Priority: low
+# Description: Enhanced search capabilities with saved filters and intelligent recommendations
+# Details:
+Implement advanced search with full-text search, saved filter combinations, search history, and AI-powered investment recommendations based on user preferences.
+
+# Test Strategy:
+Test search accuracy and performance, verify saved filters work correctly, ensure recommendations are relevant

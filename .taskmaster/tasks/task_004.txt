@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Company Profile Pages
+# Status: pending
+# Dependencies: 2
+# Priority: medium
+# Description: Detailed company information pages with financials, team, and investment terms
+# Details:
+Create comprehensive company profile pages showing detailed financials, management team, investment terms, due diligence documents, and company updates. Include interactive charts and data visualization.
+
+# Test Strategy:
+Verify all company data displays correctly, test document access permissions, ensure charts render properly

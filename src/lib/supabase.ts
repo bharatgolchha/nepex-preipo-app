@@ -4,11 +4,14 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-console.log('🔍 Supabase Environment Check:', {
-  hasUrl: !!supabaseUrl,
-  hasKey: !!supabaseAnonKey,
-  urlValue: supabaseUrl ? `${supabaseUrl.substring(0, 20)}...` : 'undefined'
-})
+// Environment check - only log in development
+if (import.meta.env.DEV) {
+  console.log('🔍 Supabase Environment Check:', {
+    hasUrl: !!supabaseUrl,
+    hasKey: !!supabaseAnonKey,
+    urlValue: supabaseUrl ? `${supabaseUrl.substring(0, 20)}...` : 'undefined'
+  })
+}
 
 // Create Supabase client with better error handling
 let supabase: any = null
@@ -30,7 +33,9 @@ try {
       })
     }
   } else {
-    console.log('✅ Creating Supabase client...')
+    if (import.meta.env.DEV) {
+      console.log('✅ Creating Supabase client...')
+    }
     supabase = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         autoRefreshToken: true,
@@ -38,7 +43,9 @@ try {
         detectSessionInUrl: true
       }
     })
-    console.log('✅ Supabase client created successfully')
+    if (import.meta.env.DEV) {
+      console.log('✅ Supabase client created successfully')
+    }
   }
 } catch (error) {
   console.error('❌ Error creating Supabase client:', error)

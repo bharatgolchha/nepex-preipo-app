@@ -30,6 +30,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
+  // Email verification disabled for development - users can access dashboard directly
+
   // If specific user type is required but user doesn't match
   if (requiredUserType && user?.role !== requiredUserType) {
     // Redirect to appropriate dashboard based on user type

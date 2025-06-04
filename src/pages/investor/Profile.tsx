@@ -191,25 +191,12 @@ const Profile: React.FC = () => {
                       })}
                     />
                     <div className="flex items-center gap-1">
-                      {user?.emailVerified ? (
-                        <>
-                          <CheckCircle className="h-5 w-5 text-green-600" />
-                          <span className="text-xs text-green-600">Verified</span>
-                        </>
-                      ) : (
-                        <>
-                          <AlertCircle className="h-5 w-5 text-yellow-600" />
-                          <span className="text-xs text-yellow-600">Not verified</span>
-                        </>
-                      )}
+                      {/* Email verification disabled for development - show as verified */}
+                      <CheckCircle className="h-5 w-5 text-green-600" />
+                      <span className="text-xs text-green-600">Active</span>
                     </div>
                   </div>
-                  {!user?.emailVerified && (
-                    <p className="mt-1 text-sm text-yellow-600 flex items-center gap-2">
-                      <Mail className="h-4 w-4" />
-                      Please check your email and click the verification link
-                    </p>
-                  )}
+                  {/* Email verification message removed - disabled for development */}
                 </div>
 
                 <div>

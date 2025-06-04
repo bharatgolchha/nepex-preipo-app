@@ -1,0 +1,11 @@
+# Task ID: 25
+# Title: Legal Pages and Compliance Documentation
+# Status: pending
+# Dependencies: 22
+# Priority: medium
+# Description: Terms of service, privacy policy, and regulatory compliance documentation
+# Details:
+Create comprehensive legal documentation including terms of service, privacy policy, investment disclaimers, risk warnings, and regulatory compliance pages. Ensure GDPR and CCPA compliance.
+
+# Test Strategy:
+Review with legal team, ensure all required disclosures are present, verify compliance with regulations

@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Portfolio Management Dashboard
+# Status: pending
+# Dependencies: 5
+# Priority: high
+# Description: Comprehensive portfolio tracking and performance analytics for investors
+# Details:
+Build My Portfolio page with current holdings, performance metrics, diversification analysis, and historical tracking. Include interactive charts, export functionality, and detailed investment breakdowns.
+
+# Test Strategy:
+Verify portfolio calculations are accurate, test chart functionality, ensure real-time updates work correctly

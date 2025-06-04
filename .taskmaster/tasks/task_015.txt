@@ -1,0 +1,11 @@
+# Task ID: 15
+# Title: Multi-factor Authentication
+# Status: pending
+# Dependencies: None
+# Priority: medium
+# Description: Enhanced security with MFA options including SMS, email, and authenticator apps
+# Details:
+Implement MFA using Supabase Auth with SMS, email, and TOTP authenticator app options. Include backup codes and account recovery procedures.
+
+# Test Strategy:
+Test all MFA methods, verify backup procedures work, ensure secure implementation

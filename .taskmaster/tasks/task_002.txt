@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Investment Offerings Management System
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Build system for creating, managing, and displaying pre-IPO investment opportunities
+# Details:
+Create API endpoints and UI for managing investment offerings. Include company profiles, investment terms, minimum amounts, risk ratings, and due diligence documents. Implement filtering and search capabilities.
+
+# Test Strategy:
+Test CRUD operations for offerings, verify filtering works correctly, ensure proper data validation and security

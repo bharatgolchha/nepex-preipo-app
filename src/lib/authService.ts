@@ -23,11 +23,35 @@ export interface AuthUser {
 
 export class AuthService {
   /**
+   * Development helper: Auto-verify email for testing
+   */
+  private async autoVerifyEmailInDev(userId: string): Promise<void> {
+    if (import.meta.env.DEV) {
+      try {
+        console.log('🔧 Development mode: Auto-verifying email for user:', userId)
+        await supabase.rpc('verify_user_email', { user_id: userId })
+      } catch (error) {
+        console.log('📧 Note: Email auto-verification failed, but this is normal in development')
+        // Don't throw error - this is just a dev convenience
+      }
+    }
+  }
+
+  /**
    * Create a new investor account in Supabase
    */
   async createInvestorAccount(data: InvestorRegistrationData): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
     try {
-      console.log('🚀 Creating investor account for:', data.email)
+      console.log('🚀 Starting clean registration for:', data.email)
+      
+      // Check if email is already registered in our database
+      const emailExists = await this.isEmailRegistered(data.email)
+      if (emailExists) {
+        return { 
+          success: false, 
+          error: 'An account with this email already exists. Please try signing in instead.' 
+        }
+      }
       
       // Split full name into first and last name
       const nameParts = data.fullName.trim().split(' ')
@@ -49,6 +73,18 @@ export class AuthService {
 
       if (authError) {
         console.error('❌ Auth signup error:', authError)
+        if (authError.message.includes('User already registered')) {
+          return { success: false, error: 'An account with this email already exists. Please try signing in instead.' }
+        }
+        if (authError.message.includes('too many requests') || authError.status === 429) {
+          return { success: false, error: 'Too many registration attempts. Please wait a few minutes and try again.' }
+        }
+        if (authError.message.includes('email_address_invalid') || authError.code === 'email_address_invalid') {
+          return { success: false, error: 'Please enter a valid email address.' }
+        }
+        if (authError.message.includes('password')) {
+          return { success: false, error: 'Password must be at least 6 characters long.' }
+        }
         return { success: false, error: authError.message }
       }
 
@@ -58,24 +94,12 @@ export class AuthService {
 
       console.log('✅ Auth user created:', authData.user.id)
 
-      // 1.5. Sign in the user immediately to establish auth context for RLS
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password
-      })
-
-      if (signInError) {
-        console.error('❌ Auto sign-in error:', signInError)
-        // Continue anyway, we'll try the insert without auth context
-      } else {
-        console.log('✅ User signed in for RLS context')
-      }
-
-      // 2. Create user profile in public.users table
-      console.log('📝 Attempting to create user profile for:', authData.user.id)
-      const { error: userError } = await supabase
-        .from('users')
-        .insert({
+      // 2. Create user profile - simple direct insertion (RLS disabled)
+      console.log('📝 Creating user profile in database...')
+      
+      try {
+        // Insert/update user record
+        const { error: usersError } = await supabase.from('users').upsert({
           id: authData.user.id,
           email: data.email,
           phone: data.phone,
@@ -83,41 +107,45 @@ export class AuthService {
           status: 'active',
           email_verified: false,
           phone_verified: false
-        })
+        }, { onConflict: 'id' })
 
-      if (userError) {
-        console.error('❌ User profile creation error:', userError)
-        console.error('❌ Error details:', JSON.stringify(userError, null, 2))
-        return { success: false, error: 'Failed to create user profile: ' + userError.message }
-      }
+        if (usersError) throw usersError
 
-      console.log('✅ User profile created in public.users')
+        // Insert into user_profiles table (check for existing record first)
+        const { data: existingProfile } = await supabase
+          .from('user_profiles')
+          .select('id')
+          .eq('user_id', authData.user.id)
+          .single()
 
-      // 3. Create detailed user profile
-      console.log('📝 Attempting to create detailed user profile for:', authData.user.id)
-      const { error: profileError } = await supabase
-        .from('user_profiles')
-        .insert({
-          user_id: authData.user.id,
-          first_name: firstName,
-          last_name: lastName,
-          date_of_birth: data.dateOfBirth,
-          nationality: 'Nepalese'
-        })
+        if (existingProfile) {
+          // Update existing profile
+          const { error: profilesError } = await supabase
+            .from('user_profiles')
+            .update({
+              first_name: firstName,
+              last_name: lastName,
+              date_of_birth: data.dateOfBirth,
+              nationality: 'Nepalese'
+            })
+            .eq('user_id', authData.user.id)
+          
+          if (profilesError) throw profilesError
+        } else {
+          // Insert new profile
+          const { error: profilesError } = await supabase.from('user_profiles').insert({
+            user_id: authData.user.id,
+            first_name: firstName,
+            last_name: lastName,
+            date_of_birth: data.dateOfBirth,
+            nationality: 'Nepalese'
+          })
+          
+          if (profilesError) throw profilesError
+        }
 
-      if (profileError) {
-        console.error('❌ User profile creation error:', profileError)
-        console.error('❌ Profile error details:', JSON.stringify(profileError, null, 2))
-        // This is not critical, continue anyway
-      } else {
-        console.log('✅ Detailed user profile created')
-      }
-
-      // 4. Initialize KYC status
-      console.log('📝 Attempting to initialize KYC status for:', authData.user.id)
-      const { error: kycError } = await supabase
-        .from('kyc_status')
-        .insert({
+        // Insert into kyc_status table (with conflict handling)
+        const { error: kycError } = await supabase.from('kyc_status').upsert({
           user_id: authData.user.id,
           overall_status: 'not_started',
           personal_info_complete: false,
@@ -125,21 +153,12 @@ export class AuthService {
           documents_uploaded: false,
           documents_verified: false,
           risk_assessment_complete: false
-        })
+        }, { onConflict: 'user_id' })
 
-      if (kycError) {
-        console.error('❌ KYC status creation error:', kycError)
-        console.error('❌ KYC error details:', JSON.stringify(kycError, null, 2))
-        // This is not critical, continue anyway
-      } else {
-        console.log('✅ KYC status initialized')
-      }
+        if (kycError) throw kycError
 
-      // 5. Create notification for welcome
-      console.log('📝 Attempting to create welcome notification for:', authData.user.id)
-      const { error: notificationError } = await supabase
-        .from('notifications')
-        .insert({
+        // Insert welcome notification (ignore conflicts)
+        await supabase.from('notifications').insert({
           user_id: authData.user.id,
           type: 'system_update',
           title: 'Welcome to NepEx!',
@@ -147,29 +166,23 @@ export class AuthService {
           priority: 'medium'
         })
 
-      if (notificationError) {
-        console.error('❌ Welcome notification error:', notificationError)
-        console.error('❌ Notification error details:', JSON.stringify(notificationError, null, 2))
-        // This is not critical, continue anyway
-      } else {
-        console.log('✅ Welcome notification created')
-      }
+        console.log('✅ All profile data created successfully!')
 
-      const user: AuthUser = {
-        id: authData.user.id,
-        email: data.email,
-        role: 'investor',
-        emailVerified: !!authData.user.email_confirmed_at,
-        profile: {
-          firstName,
-          lastName,
-          phone: data.phone,
-          dateOfBirth: data.dateOfBirth
-        }
+      } catch (profileError: any) {
+        console.error('❌ Profile creation failed:', profileError)
+        return { success: false, error: 'Failed to create user profile: ' + (profileError.message || 'Unknown error') }
       }
 
       console.log('✅ Investor account created successfully!')
-      return { success: true, user }
+      console.log('🚀 Email verification disabled - signing user in directly')
+      
+      // Sign in the user automatically (skip email verification for development)
+      const signInResult = await this.signIn(data.email, data.password)
+      if (signInResult.success && signInResult.user) {
+        return { success: true, user: signInResult.user }
+      }
+      
+      return { success: true }
       
     } catch (error) {
       console.error('❌ Unexpected error in createInvestorAccount:', error)
@@ -178,7 +191,7 @@ export class AuthService {
   }
 
   /**
-   * Sign in existing user
+   * Sign in existing user (email verification disabled for development)
    */
   async signIn(email: string, password: string): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
     try {
@@ -188,6 +201,53 @@ export class AuthService {
       })
 
       if (error) {
+        // In development, bypass email confirmation errors
+        if (error.message === 'Email not confirmed' && import.meta.env.DEV) {
+          console.log('🔧 Development mode: Bypassing email confirmation requirement')
+          
+          // Try to get user info directly from database
+          const { data: userRecord, error: userError } = await supabase
+            .from('users')
+            .select(`
+              id,
+              email,
+              role,
+              phone,
+              user_profiles (
+                first_name,
+                last_name,
+                date_of_birth
+              )
+            `)
+            .eq('email', email)
+            .single()
+            
+          if (userError || !userRecord) {
+            return { success: false, error: 'User not found in database' }
+          }
+          
+          // Create user object for development bypass
+          const user: AuthUser = {
+            id: userRecord.id,
+            email: userRecord.email,
+            role: userRecord.role,
+            emailVerified: false, // We know it's not verified, but we're bypassing
+            profile: userRecord.user_profiles ? {
+              firstName: userRecord.user_profiles.first_name || '',
+              lastName: userRecord.user_profiles.last_name || '',
+              phone: userRecord.phone || '',
+              dateOfBirth: userRecord.user_profiles.date_of_birth || ''
+            } : {
+              firstName: '',
+              lastName: '',
+              phone: userRecord.phone || '',
+              dateOfBirth: ''
+            }
+          }
+          
+          console.log('✅ Development bypass successful')
+          return { success: true, user }
+        }
         return { success: false, error: error.message }
       }
 
@@ -328,6 +388,26 @@ export class AuthService {
     }
   }
 
+  /**
+   * Resend email verification
+   */
+  async resendEmailVerification(email: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email
+      })
+
+      if (error) {
+        return { success: false, error: error.message }
+      }
+
+      return { success: true }
+    } catch (error) {
+      console.error('Error resending verification email:', error)
+      return { success: false, error: 'Failed to resend verification email' }
+    }
+  }
 
 }
 

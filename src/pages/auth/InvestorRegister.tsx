@@ -162,13 +162,8 @@ const InvestorRegister: React.FC = () => {
 
       if (result.success) {
         console.log('✅ Registration successful! Navigating to dashboard...');
-        // Registration successful - redirect to investor dashboard
-        navigate('/investor/dashboard', { 
-          state: { 
-            newUser: true,
-            message: 'Welcome to NepEx! Please complete your KYC verification to start investing.' 
-          }
-        });
+        // Registration successful - redirect directly to dashboard (email verification disabled)
+        navigate('/investor/dashboard');
       } else {
         console.error('❌ Registration failed:', result.error);
         setErrors({ general: result.error || 'Registration failed. Please try again.' });

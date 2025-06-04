@@ -1,0 +1,11 @@
+# Task ID: 7
+# Title: Enhanced Investor Dashboard
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Upgrade dashboard with portfolio metrics, recent activity, and quick actions
+# Details:
+Enhance current dashboard with portfolio value summary, performance charts, recent investment activity feed, upcoming opportunities, and quick action buttons. Add notification center integration.
+
+# Test Strategy:
+Verify all metrics display correctly, test responsive design, ensure quick actions work properly

@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: Browse Offerings Page
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Create investor-facing page to browse and filter available investment opportunities
+# Details:
+Build responsive React component with card-based layout showing investment opportunities. Include advanced filtering (industry, amount, risk level), search functionality, pagination, and detailed company information modals.
+
+# Test Strategy:
+Test filtering and search functionality, verify mobile responsiveness, ensure performance with large datasets

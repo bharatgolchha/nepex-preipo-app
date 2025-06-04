@@ -1,0 +1,270 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-13T00:00:00.000Z",
+    "totalTasks": 26,
+    "projectName": "NepEx Pre-IPO Investment Platform"
+  },
+  "tasks": [
+    {
+      "id": 0,
+      "title": "Complete Investor Authentication System",
+      "description": "Finalize the investor authentication, registration, and login system with proper email verification and navigation",
+      "status": "in-progress",
+      "priority": "high",
+      "dependencies": [],
+      "details": "Complete the authentication work that was in progress: 1) Fix authentication service to fetch user data correctly, 2) Ensure email verification status displays from auth.users.email_confirmed_at, 3) Fix investor navigation menus (Dashboard, Browse Offerings, My Portfolio, Profile), 4) Ensure ProtectedRoute works with user roles, 5) Fix loading states and blank screens, 6) Complete investor profile with verification status, 7) Test full registration/login flow end-to-end",
+      "testStrategy": "Test complete registration flow, verify email verification displays correctly, ensure navigation works for investors, test login/logout cycles, verify protected routes work properly"
+    },
+    {
+      "id": 1,
+      "title": "Database Schema Implementation",
+      "description": "Design and implement comprehensive database schema for investment platform including offerings, portfolios, and compliance tracking",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [],
+      "details": "Create tables for investment_offerings, user_portfolios, investments, companies, documents, compliance_records, and audit_logs. Implement proper relationships, constraints, and indexes. Set up RLS policies for data security.",
+      "testStrategy": "Verify all tables created correctly, test RLS policies, ensure proper relationships and constraints work as expected"
+    },
+    {
+      "id": 2,
+      "title": "Investment Offerings Management System",
+      "description": "Build system for creating, managing, and displaying pre-IPO investment opportunities",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [1],
+      "details": "Create API endpoints and UI for managing investment offerings. Include company profiles, investment terms, minimum amounts, risk ratings, and due diligence documents. Implement filtering and search capabilities.",
+      "testStrategy": "Test CRUD operations for offerings, verify filtering works correctly, ensure proper data validation and security"
+    },
+    {
+      "id": 3,
+      "title": "Browse Offerings Page",
+      "description": "Create investor-facing page to browse and filter available investment opportunities",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [2],
+      "details": "Build responsive React component with card-based layout showing investment opportunities. Include advanced filtering (industry, amount, risk level), search functionality, pagination, and detailed company information modals.",
+      "testStrategy": "Test filtering and search functionality, verify mobile responsiveness, ensure performance with large datasets"
+    },
+    {
+      "id": 4,
+      "title": "Company Profile Pages",
+      "description": "Detailed company information pages with financials, team, and investment terms",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [2],
+      "details": "Create comprehensive company profile pages showing detailed financials, management team, investment terms, due diligence documents, and company updates. Include interactive charts and data visualization.",
+      "testStrategy": "Verify all company data displays correctly, test document access permissions, ensure charts render properly"
+    },
+    {
+      "id": 5,
+      "title": "Investment Process Workflow",
+      "description": "Complete investment workflow from selection to confirmation and documentation",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [3, 4],
+      "details": "Build multi-step investment process including amount selection, terms review, accreditation verification, digital signatures, payment processing integration, and confirmation. Include status tracking and email notifications.",
+      "testStrategy": "Test complete investment flow end-to-end, verify payment integration, ensure proper documentation generation"
+    },
+    {
+      "id": 6,
+      "title": "Portfolio Management Dashboard",
+      "description": "Comprehensive portfolio tracking and performance analytics for investors",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [5],
+      "details": "Build My Portfolio page with current holdings, performance metrics, diversification analysis, and historical tracking. Include interactive charts, export functionality, and detailed investment breakdowns.",
+      "testStrategy": "Verify portfolio calculations are accurate, test chart functionality, ensure real-time updates work correctly"
+    },
+    {
+      "id": 7,
+      "title": "Enhanced Investor Dashboard",
+      "description": "Upgrade dashboard with portfolio metrics, recent activity, and quick actions",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [6],
+      "details": "Enhance current dashboard with portfolio value summary, performance charts, recent investment activity feed, upcoming opportunities, and quick action buttons. Add notification center integration.",
+      "testStrategy": "Verify all metrics display correctly, test responsive design, ensure quick actions work properly"
+    },
+    {
+      "id": 8,
+      "title": "KYC/AML Compliance System",
+      "description": "Comprehensive Know Your Customer and Anti-Money Laundering compliance workflow",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [],
+      "details": "Implement accredited investor verification, identity verification workflow, document collection system, compliance status tracking, and automated reporting. Integrate with third-party verification services.",
+      "testStrategy": "Test verification workflows, ensure document upload security, verify compliance reporting accuracy"
+    },
+    {
+      "id": 9,
+      "title": "Document Management System",
+      "description": "Secure document sharing, storage, and digital signature capabilities",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [8],
+      "details": "Build comprehensive document management with secure upload/download, version control, digital signatures, search functionality, and compliance archival. Integrate with Supabase Storage.",
+      "testStrategy": "Test document security and access controls, verify digital signature functionality, ensure version control works"
+    },
+    {
+      "id": 10,
+      "title": "Payment Processing Integration",
+      "description": "Integrate payment systems for investment transactions and fee processing",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [5],
+      "details": "Integrate Stripe or similar payment processor for investment transactions, ACH transfers, wire transfers, and fee processing. Include payment status tracking and reconciliation.",
+      "testStrategy": "Test payment flows in sandbox environment, verify transaction security, ensure proper error handling"
+    },
+    {
+      "id": 11,
+      "title": "Advanced Notification System",
+      "description": "Comprehensive notification system with email, in-app, and push notifications",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [],
+      "details": "Build notification system supporting real-time in-app notifications, email notifications, and push notifications. Include user preferences, notification history, and automated triggers for investment events.",
+      "testStrategy": "Test all notification types, verify user preferences work, ensure notifications are delivered reliably"
+    },
+    {
+      "id": 12,
+      "title": "Admin Panel for Platform Management",
+      "description": "Administrative interface for platform oversight and user management",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [8, 9],
+      "details": "Create admin dashboard for user management, compliance oversight, content moderation, investment approval workflows, and system monitoring. Include reporting and analytics capabilities.",
+      "testStrategy": "Test admin functionality thoroughly, verify security restrictions, ensure reporting accuracy"
+    },
+    {
+      "id": 13,
+      "title": "Company Portal for Offering Management",
+      "description": "Portal for companies to manage their investment offerings and investor communications",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [2, 9],
+      "details": "Build company-facing portal for creating and managing investment offerings, uploading documents, communicating with investors, tracking fundraising progress, and accessing analytics.",
+      "testStrategy": "Test company user workflows, verify document upload functionality, ensure proper access controls"
+    },
+    {
+      "id": 14,
+      "title": "Advanced Analytics and Reporting",
+      "description": "Business intelligence dashboard with user behavior, performance, and compliance analytics",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [6, 12],
+      "details": "Implement comprehensive analytics including user engagement tracking, investment performance analysis, compliance reporting, and business intelligence dashboards. Include export capabilities.",
+      "testStrategy": "Verify analytics accuracy, test dashboard performance, ensure data privacy compliance"
+    },
+    {
+      "id": 15,
+      "title": "Multi-factor Authentication",
+      "description": "Enhanced security with MFA options including SMS, email, and authenticator apps",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [],
+      "details": "Implement MFA using Supabase Auth with SMS, email, and TOTP authenticator app options. Include backup codes and account recovery procedures.",
+      "testStrategy": "Test all MFA methods, verify backup procedures work, ensure secure implementation"
+    },
+    {
+      "id": 16,
+      "title": "Mobile Responsive Optimization",
+      "description": "Ensure all platform features work seamlessly on mobile devices",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [3, 6, 7],
+      "details": "Optimize all React components for mobile responsiveness, test touch interactions, ensure charts and tables work on small screens, and implement mobile-specific UI patterns.",
+      "testStrategy": "Test on various mobile devices and screen sizes, verify touch interactions, ensure performance is acceptable"
+    },
+    {
+      "id": 17,
+      "title": "SEO and Marketing Pages",
+      "description": "Public marketing website with SEO optimization for investor acquisition",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [],
+      "details": "Create public marketing pages including homepage, about us, how it works, and blog. Implement SEO best practices, meta tags, structured data, and performance optimization.",
+      "testStrategy": "Test SEO implementation, verify page load speeds, ensure proper indexing by search engines"
+    },
+    {
+      "id": 18,
+      "title": "API Development and Documentation",
+      "description": "RESTful API with comprehensive documentation for external integrations",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [2, 6],
+      "details": "Develop REST API endpoints for all platform functionality, implement proper authentication and rate limiting, create comprehensive API documentation with examples.",
+      "testStrategy": "Test all API endpoints, verify authentication works correctly, ensure documentation is accurate"
+    },
+    {
+      "id": 19,
+      "title": "Data Export and Reporting Tools",
+      "description": "Tools for users to export portfolio data, tax reports, and investment summaries",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [6],
+      "details": "Implement data export functionality for portfolio data, performance reports, tax documentation, and investment summaries. Support multiple formats (PDF, CSV, Excel).",
+      "testStrategy": "Test export functionality with various data sets, verify format accuracy, ensure sensitive data protection"
+    },
+    {
+      "id": 20,
+      "title": "Real-time Updates and WebSocket Integration",
+      "description": "Real-time updates for investment opportunities, portfolio values, and notifications",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [11],
+      "details": "Implement WebSocket connections using Supabase Realtime for live updates of investment opportunities, portfolio values, and notifications. Ensure efficient connection management.",
+      "testStrategy": "Test real-time functionality under load, verify connection stability, ensure updates are accurate"
+    },
+    {
+      "id": 21,
+      "title": "Advanced Search and Filtering",
+      "description": "Enhanced search capabilities with saved filters and intelligent recommendations",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [3],
+      "details": "Implement advanced search with full-text search, saved filter combinations, search history, and AI-powered investment recommendations based on user preferences.",
+      "testStrategy": "Test search accuracy and performance, verify saved filters work correctly, ensure recommendations are relevant"
+    },
+    {
+      "id": 22,
+      "title": "Audit Logging and Compliance Tracking",
+      "description": "Comprehensive audit trail for all user actions and system events",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [8],
+      "details": "Implement comprehensive audit logging for all user actions, system events, data changes, and compliance activities. Include log analysis and alerting capabilities.",
+      "testStrategy": "Verify all actions are logged correctly, test log integrity, ensure compliance requirements are met"
+    },
+    {
+      "id": 23,
+      "title": "Performance Monitoring and Optimization",
+      "description": "System monitoring, performance optimization, and error tracking implementation",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [],
+      "details": "Implement comprehensive monitoring with error tracking, performance metrics, uptime monitoring, and automated alerting. Optimize database queries and React performance.",
+      "testStrategy": "Test monitoring systems work correctly, verify alerts are triggered appropriately, measure performance improvements"
+    },
+    {
+      "id": 24,
+      "title": "Automated Testing Suite",
+      "description": "Comprehensive test coverage with unit, integration, and end-to-end tests",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [],
+      "details": "Implement comprehensive testing including unit tests for components, integration tests for API endpoints, end-to-end tests for critical user flows, and automated CI/CD pipeline.",
+      "testStrategy": "Achieve 80%+ code coverage, ensure all critical paths are tested, verify CI/CD pipeline works correctly"
+    },
+    {
+      "id": 25,
+      "title": "Legal Pages and Compliance Documentation",
+      "description": "Terms of service, privacy policy, and regulatory compliance documentation",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [22],
+      "details": "Create comprehensive legal documentation including terms of service, privacy policy, investment disclaimers, risk warnings, and regulatory compliance pages. Ensure GDPR and CCPA compliance.",
+      "testStrategy": "Review with legal team, ensure all required disclosures are present, verify compliance with regulations"
+    }
+  ]
+} 

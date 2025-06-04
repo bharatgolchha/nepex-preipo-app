@@ -1,0 +1,11 @@
+# Task ID: 12
+# Title: Admin Panel for Platform Management
+# Status: pending
+# Dependencies: 8, 9
+# Priority: medium
+# Description: Administrative interface for platform oversight and user management
+# Details:
+Create admin dashboard for user management, compliance oversight, content moderation, investment approval workflows, and system monitoring. Include reporting and analytics capabilities.
+
+# Test Strategy:
+Test admin functionality thoroughly, verify security restrictions, ensure reporting accuracy

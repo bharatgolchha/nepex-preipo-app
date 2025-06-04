@@ -1,0 +1,11 @@
+# Task ID: 0
+# Title: Complete Investor Authentication System
+# Status: in-progress
+# Dependencies: None
+# Priority: high
+# Description: Finalize the investor authentication, registration, and login system with proper email verification and navigation
+# Details:
+Complete the authentication work that was in progress: 1) Fix authentication service to fetch user data correctly, 2) Ensure email verification status displays from auth.users.email_confirmed_at, 3) Fix investor navigation menus (Dashboard, Browse Offerings, My Portfolio, Profile), 4) Ensure ProtectedRoute works with user roles, 5) Fix loading states and blank screens, 6) Complete investor profile with verification status, 7) Test full registration/login flow end-to-end
+
+# Test Strategy:
+Test complete registration flow, verify email verification displays correctly, ensure navigation works for investors, test login/logout cycles, verify protected routes work properly

@@ -1,0 +1,11 @@
+# Task ID: 20
+# Title: Real-time Updates and WebSocket Integration
+# Status: pending
+# Dependencies: 11
+# Priority: medium
+# Description: Real-time updates for investment opportunities, portfolio values, and notifications
+# Details:
+Implement WebSocket connections using Supabase Realtime for live updates of investment opportunities, portfolio values, and notifications. Ensure efficient connection management.
+
+# Test Strategy:
+Test real-time functionality under load, verify connection stability, ensure updates are accurate

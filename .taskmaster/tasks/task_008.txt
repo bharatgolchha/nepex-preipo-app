@@ -1,0 +1,11 @@
+# Task ID: 8
+# Title: KYC/AML Compliance System
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Comprehensive Know Your Customer and Anti-Money Laundering compliance workflow
+# Details:
+Implement accredited investor verification, identity verification workflow, document collection system, compliance status tracking, and automated reporting. Integrate with third-party verification services.
+
+# Test Strategy:
+Test verification workflows, ensure document upload security, verify compliance reporting accuracy

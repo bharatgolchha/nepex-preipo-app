@@ -1,0 +1,11 @@
+# Task ID: 11
+# Title: Advanced Notification System
+# Status: pending
+# Dependencies: None
+# Priority: medium
+# Description: Comprehensive notification system with email, in-app, and push notifications
+# Details:
+Build notification system supporting real-time in-app notifications, email notifications, and push notifications. Include user preferences, notification history, and automated triggers for investment events.
+
+# Test Strategy:
+Test all notification types, verify user preferences work, ensure notifications are delivered reliably

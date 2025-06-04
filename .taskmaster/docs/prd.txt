@@ -1,0 +1,279 @@
+# NepEx Pre-IPO Investment Platform - Product Requirements Document
+
+## Project Overview
+
+NepEx is a comprehensive pre-IPO investment platform that enables accredited investors to discover, evaluate, and invest in high-growth companies preparing for public offerings. The platform provides a secure, compliant, and user-friendly experience for both individual and institutional investors.
+
+## Technical Architecture
+
+### Technology Stack
+- **Frontend**: React 18 + TypeScript + Vite
+- **Backend**: Supabase (PostgreSQL + Auth + Storage + Edge Functions)
+- **Styling**: Tailwind CSS
+- **State Management**: React Context + Custom Hooks
+- **Routing**: React Router v6
+- **Build Tool**: Vite
+- **Package Manager**: npm
+
+### Database Schema Requirements
+- **Users Management**: `auth.users` (Supabase Auth) + `public.users` (profile data)
+- **User Profiles**: `user_profiles` table with investor details
+- **KYC Management**: `kyc_status` table for compliance tracking
+- **Notifications**: `notifications` table for user alerts
+- **Investment Offerings**: Tables for managing pre-IPO opportunities
+- **Portfolio Tracking**: Investment history and portfolio management
+- **Document Management**: Secure document storage and sharing
+
+## Core Features & Requirements
+
+### 1. Authentication & User Management
+
+**Investor Registration**
+- Email/password registration with strong validation
+- Email verification required before platform access
+- Role-based access control (investor, admin, company)
+- Secure password requirements and reset functionality
+- Profile completion workflow after registration
+
+**Login System**
+- Email/password authentication
+- Remember me functionality
+- Protected routes based on user roles
+- Session management and automatic logout
+- Password reset via email
+
+**Profile Management**
+- Complete investor profile with personal/financial information
+- KYC (Know Your Customer) status tracking
+- Document upload for accreditation verification
+- Profile photo upload and management
+- Account settings and preferences
+
+### 2. Investor Dashboard
+
+**Overview Section**
+- Portfolio value summary and performance metrics
+- Recent investment activity feed
+- Upcoming investment opportunities
+- Quick action buttons (Browse, Invest, Documents)
+- Notification center with important updates
+
+**Navigation Structure**
+- Dashboard (main overview)
+- Browse Offerings (available investments)
+- My Portfolio (current investments)
+- Profile (account management)
+- Settings (preferences and security)
+
+### 3. Investment Offerings Discovery
+
+**Browse Offerings**
+- Filterable list of available pre-IPO opportunities
+- Company information cards with key metrics
+- Investment terms and minimum amounts
+- Risk ratings and compliance information
+- Advanced search and filtering capabilities
+
+**Company Profiles**
+- Detailed company information and financials
+- Management team and board information
+- Investment terms and conditions
+- Due diligence documents
+- Company updates and news
+
+**Investment Process**
+- Investment amount selection and validation
+- Terms acceptance and digital signatures
+- Payment processing integration
+- Investment confirmation and documentation
+- Status tracking throughout the process
+
+### 4. Portfolio Management
+
+**My Investments**
+- Current investment holdings with valuation
+- Historical performance tracking
+- Document access for each investment
+- Status updates and company communications
+- Exit notifications and opportunities
+
+**Performance Analytics**
+- Portfolio diversification analysis
+- Performance comparison against benchmarks
+- Risk assessment and recommendations
+- Tax reporting and documentation
+- Investment timeline and milestones
+
+### 5. Compliance & Security
+
+**KYC/AML Compliance**
+- Accredited investor verification
+- Identity verification workflow
+- Document collection and validation
+- Compliance status dashboard
+- Regulatory reporting capabilities
+
+**Security Features**
+- Multi-factor authentication option
+- Session security and monitoring
+- Data encryption at rest and in transit
+- Audit logging for all transactions
+- Privacy controls and data management
+
+### 6. Communication & Notifications
+
+**Notification System**
+- Real-time notifications for important updates
+- Email notifications for critical events
+- In-app notification center
+- Customizable notification preferences
+- Investment-specific alerts and updates
+
+**Document Management**
+- Secure document sharing and access
+- Version control for legal documents
+- Digital signature capabilities
+- Document search and organization
+- Compliance document archival
+
+## User Roles & Permissions
+
+### Investor Users
+- Browse and research investment opportunities
+- Manage personal profile and KYC status
+- Make investments within platform limits
+- Access portfolio and performance data
+- Receive and manage communications
+
+### Company Users (Future)
+- Create and manage company profiles
+- Upload investment opportunities
+- Communicate with potential investors
+- Manage fundraising campaigns
+- Access investor analytics
+
+### Admin Users (Future)
+- Platform administration and monitoring
+- User management and compliance oversight
+- Content moderation and approval
+- System configuration and maintenance
+- Reporting and analytics access
+
+## Data Requirements & Integrations
+
+### User Data Management
+- Personal and financial information storage
+- KYC document management and verification
+- Investment history and portfolio tracking
+- Communication preferences and logs
+- Compliance and audit trail maintenance
+
+### Third-Party Integrations
+- Payment processing (Stripe/bank transfers)
+- Identity verification services
+- Document signing platforms
+- Market data providers
+- Compliance and reporting tools
+
+### Security & Privacy
+- GDPR and CCPA compliance
+- Data encryption and secure storage
+- Access controls and audit logging
+- Regular security assessments
+- Privacy policy and user consent management
+
+## Performance & Scalability
+
+### Performance Requirements
+- Page load times under 2 seconds
+- Real-time updates for critical information
+- Mobile-responsive design for all devices
+- Offline capability for document access
+- Scalable architecture for user growth
+
+### Monitoring & Analytics
+- User behavior tracking and analysis
+- System performance monitoring
+- Error logging and alerting
+- Business intelligence and reporting
+- A/B testing capabilities for features
+
+## Compliance & Legal Requirements
+
+### Regulatory Compliance
+- SEC regulations for private investments
+- FINRA compliance for investment activities
+- State securities law compliance
+- Anti-money laundering (AML) requirements
+- International compliance for global users
+
+### Legal Framework
+- Terms of service and privacy policy
+- Investment disclaimers and risk warnings
+- User agreements and consent management
+- Document retention and archival
+- Legal review workflows for content
+
+## Success Metrics
+
+### User Engagement
+- User registration and activation rates
+- Platform usage and session duration
+- Investment completion rates
+- User retention and churn analysis
+- Customer satisfaction scores
+
+### Business Metrics
+- Total assets under management
+- Investment volume and frequency
+- Revenue per user and commission tracking
+- Platform growth and market penetration
+- Compliance adherence rates
+
+## Implementation Phases
+
+### Phase 1: Core Platform (Current)
+- ✅ User authentication and registration
+- ✅ Basic investor dashboard
+- ✅ Profile management
+- ✅ Email verification system
+- ✅ Role-based navigation
+
+### Phase 2: Investment Features
+- Investment offerings catalog
+- Company profile pages
+- Investment process workflow
+- Portfolio tracking basics
+- Document management system
+
+### Phase 3: Advanced Features
+- Advanced analytics and reporting
+- Enhanced compliance tools
+- Third-party integrations
+- Mobile app development
+- API for external integrations
+
+### Phase 4: Scale & Growth
+- Multi-language support
+- International compliance
+- Advanced AI/ML features
+- Enterprise-grade security
+- White-label solutions
+
+## Technical Constraints & Considerations
+
+### Development Environment
+- Modern browser support (Chrome, Firefox, Safari, Edge)
+- Progressive Web App capabilities
+- SEO optimization for public pages
+- Accessibility compliance (WCAG 2.1)
+- Cross-platform compatibility
+
+### Infrastructure Requirements
+- Supabase hosting and scaling
+- CDN for global performance
+- Backup and disaster recovery
+- Development/staging/production environments
+- CI/CD pipeline automation
+
+This PRD serves as the foundation for building a comprehensive, secure, and compliant pre-IPO investment platform that meets the needs of sophisticated investors while maintaining regulatory compliance and operational excellence. 

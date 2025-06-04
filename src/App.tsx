@@ -14,6 +14,8 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import InvestorRegister from './pages/auth/InvestorRegister'
 import CompanyRegister from './pages/auth/CompanyRegister'
+// EmailVerification disabled for development
+// import EmailVerification from './pages/auth/EmailVerification'
 
 // Investor Pages
 import InvestorDashboard from './pages/investor/Dashboard'
@@ -54,6 +56,7 @@ function App() {
               <Route path="/auth/login" element={<Login />} />
               <Route path="/auth/register" element={<Register />} />
               <Route path="/auth/investor-register" element={<InvestorRegister />} />
+              {/* EmailVerification route removed - disabled for development */}
               
               {/* Company registration is now admin-only, but keep for existing companies */}
               <Route path="/auth/company-register" element={<CompanyRegister />} />
