@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import InvestmentModal from '@/components/investor/InvestmentModal';
 import {
   Building2,
   DollarSign,
@@ -92,6 +93,16 @@ const OfferingDetails: React.FC = () => {
     if (Number(investmentAmount) >= offeringData.investment.minInvestment) {
       setShowInvestmentModal(true);
     }
+  };
+
+  const handleInvestmentSubmit = (amount: number, paymentMethod: string) => {
+    console.log('Investment submitted:', { amount, paymentMethod, company: offeringData.companyName });
+    // Here you would typically:
+    // 1. Send to payment processor
+    // 2. Create investment record
+    // 3. Send confirmation email
+    // 4. Redirect to payment page or dashboard
+    navigate(`/investor/portfolio`);
   };
 
   return (
@@ -380,49 +391,21 @@ const OfferingDetails: React.FC = () => {
       </div>
 
       {/* Investment Modal */}
-      {showInvestmentModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <Card className="max-w-md w-full p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Confirm Investment</h2>
-            <div className="space-y-3 mb-6">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Company:</span>
-                <span className="font-medium">{offeringData.companyName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Amount:</span>
-                <span className="font-medium">NPR {Number(investmentAmount).toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Investment Units:</span>
-                <span className="font-medium">{investmentUnits}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Lock-in Period:</span>
-                <span className="font-medium">3 years</span>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                className="flex-1"
-                onClick={() => setShowInvestmentModal(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                className="flex-1"
-                onClick={() => {
-                  // Navigate to payment page
-                  navigate(`/payment/${offeringData.id}?amount=${investmentAmount}`);
-                }}
-              >
-                Proceed to Payment
-              </Button>
-            </div>
-          </Card>
-        </div>
-      )}
+      <InvestmentModal
+        isOpen={showInvestmentModal}
+        onClose={() => setShowInvestmentModal(false)}
+        offering={{
+          id: offeringData.id.toString(),
+          companyName: offeringData.companyName,
+          logo: offeringData.logo,
+          minInvestment: offeringData.investment.minInvestment,
+          maxInvestment: offeringData.investment.maxInvestment,
+          targetRaise: offeringData.investment.targetRaise,
+          raisedAmount: offeringData.investment.currentRaised,
+          investmentStructure: offeringData.investment.investmentStructure
+        }}
+        onInvest={handleInvestmentSubmit}
+      />
     </div>
   );
 };

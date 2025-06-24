@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import OfferingCard from '@/components/investor/OfferingCard';
+import InvestmentModal from '@/components/investor/InvestmentModal';
 import {
   Search,
   Filter,
@@ -11,7 +13,11 @@ import {
   DollarSign,
   Users,
   Building2,
-  ChevronDown
+  ChevronDown,
+  SortAsc,
+  SortDesc,
+  Star,
+  Clock
 } from 'lucide-react';
 
 // Interface for companies from localStorage
@@ -119,6 +125,9 @@ const fallbackOfferings: Offering[] = [
   }
 ];
 
+type SortOption = 'name' | 'amount_raised' | 'closing_date' | 'min_investment' | 'investors';
+type SortDirection = 'asc' | 'desc';
+
 const Offerings: React.FC = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
@@ -126,6 +135,11 @@ const Offerings: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [offerings, setOfferings] = useState<Offering[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState<SortOption>('name');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [selectedOffering, setSelectedOffering] = useState<Offering | null>(null);
+  const [showInvestmentModal, setShowInvestmentModal] = useState(false);
+  const [priceRange, setPriceRange] = useState({ min: '', max: '' });
 
   // Load companies from localStorage and convert to offerings
   useEffect(() => {
@@ -186,12 +200,69 @@ const Offerings: React.FC = () => {
   // Get unique sectors from offerings
   const sectors = ['All', ...Array.from(new Set(offerings.map(o => o.sector)))];
 
-  const filteredOfferings = offerings.filter(offering => {
-    const matchesSearch = offering.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         offering.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesSector = selectedSector === 'All' || offering.sector === selectedSector;
-    return matchesSearch && matchesSector;
-  });
+  // Handle sorting
+  const handleSort = (option: SortOption) => {
+    if (sortBy === option) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(option);
+      setSortDirection('asc');
+    }
+  };
+
+  // Handle investment modal
+  const handleInvestClick = (offering: Offering) => {
+    setSelectedOffering(offering);
+    setShowInvestmentModal(true);
+  };
+
+  const handleInvestmentSubmit = (amount: number, paymentMethod: string) => {
+    console.log('Investment submitted:', { amount, paymentMethod, company: selectedOffering?.companyName });
+    setShowInvestmentModal(false);
+    setSelectedOffering(null);
+    // Navigate to portfolio or confirmation page
+    navigate('/investor/portfolio');
+  };
+
+  // Filter and sort offerings
+  const filteredAndSortedOfferings = offerings
+    .filter(offering => {
+      const matchesSearch = offering.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           offering.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSector = selectedSector === 'All' || offering.sector === selectedSector;
+      
+      // Price range filter
+      const minPrice = priceRange.min ? Number(priceRange.min) : 0;
+      const maxPrice = priceRange.max ? Number(priceRange.max) : Infinity;
+      const matchesPrice = offering.minInvestment >= minPrice && offering.minInvestment <= maxPrice;
+      
+      return matchesSearch && matchesSector && matchesPrice;
+    })
+    .sort((a, b) => {
+      let comparison = 0;
+      
+      switch (sortBy) {
+        case 'name':
+          comparison = a.companyName.localeCompare(b.companyName);
+          break;
+        case 'amount_raised':
+          comparison = (a.raisedAmount / a.targetRaise) - (b.raisedAmount / b.targetRaise);
+          break;
+        case 'closing_date':
+          comparison = new Date(a.closingDate).getTime() - new Date(b.closingDate).getTime();
+          break;
+        case 'min_investment':
+          comparison = a.minInvestment - b.minInvestment;
+          break;
+        case 'investors':
+          comparison = a.investorsCount - b.investorsCount;
+          break;
+        default:
+          comparison = 0;
+      }
+      
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
 
   if (loading) {
     return (
@@ -240,7 +311,7 @@ const Offerings: React.FC = () => {
           {/* Filter Options */}
           {showFilters && (
             <Card className="p-4">
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">Sector</label>
                   <div className="flex flex-wrap gap-2">
@@ -256,6 +327,53 @@ const Offerings: React.FC = () => {
                     ))}
                   </div>
                 </div>
+                
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-2 block">Min. Investment Range</label>
+                  <div className="flex gap-3 items-center">
+                    <Input
+                      type="number"
+                      placeholder="Min (NPR)"
+                      value={priceRange.min}
+                      onChange={(e) => setPriceRange({ ...priceRange, min: e.target.value })}
+                      className="w-32"
+                    />
+                    <span className="text-gray-500">to</span>
+                    <Input
+                      type="number"
+                      placeholder="Max (NPR)"
+                      value={priceRange.max}
+                      onChange={(e) => setPriceRange({ ...priceRange, max: e.target.value })}
+                      className="w-32"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-2 block">Sort By</label>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { key: 'name' as SortOption, label: 'Company Name' },
+                      { key: 'amount_raised' as SortOption, label: 'Funding Progress' },
+                      { key: 'closing_date' as SortOption, label: 'Closing Date' },
+                      { key: 'min_investment' as SortOption, label: 'Min Investment' },
+                      { key: 'investors' as SortOption, label: 'Investor Count' }
+                    ].map((option) => (
+                      <Button
+                        key={option.key}
+                        variant={sortBy === option.key ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => handleSort(option.key)}
+                        className="flex items-center gap-1"
+                      >
+                        {option.label}
+                        {sortBy === option.key && (
+                          sortDirection === 'asc' ? <SortAsc className="h-3 w-3" /> : <SortDesc className="h-3 w-3" />
+                        )}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </Card>
           )}
@@ -265,141 +383,34 @@ const Offerings: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <Card className="p-4">
             <p className="text-sm text-gray-600">Total Opportunities</p>
-            <p className="text-2xl font-bold text-gray-900">{filteredOfferings.length}</p>
+            <p className="text-2xl font-bold text-gray-900">{filteredAndSortedOfferings.length}</p>
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600">Total Target Raise</p>
             <p className="text-2xl font-bold text-gray-900">
-              NPR {(filteredOfferings.reduce((sum, o) => sum + o.targetRaise, 0) / 10000000).toFixed(1)} Cr
+              NPR {(filteredAndSortedOfferings.reduce((sum: number, o: Offering) => sum + o.targetRaise, 0) / 10000000).toFixed(1)} Cr
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-sm text-gray-600">Average Min. Investment</p>
             <p className="text-2xl font-bold text-gray-900">
-              NPR {Math.round(filteredOfferings.reduce((sum, o) => sum + o.minInvestment, 0) / filteredOfferings.length).toLocaleString()}
+              NPR {filteredAndSortedOfferings.length > 0 ? Math.round(filteredAndSortedOfferings.reduce((sum: number, o: Offering) => sum + o.minInvestment, 0) / filteredAndSortedOfferings.length).toLocaleString() : '0'}
             </p>
           </Card>
         </div>
 
         {/* Offerings Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredOfferings.map((offering) => (
-            <Card key={offering.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                {/* Header */}
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-start gap-3">
-                    {/* Company Logo */}
-                    <div className="flex-shrink-0">
-                      <img
-                        src={offering.logo}
-                        alt={`${offering.companyName} logo`}
-                        className="w-12 h-12 rounded-lg object-cover border border-gray-200"
-                        onError={(e) => {
-                          // Fallback to a placeholder if image fails to load
-                          e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(offering.companyName)}&size=48&background=f3f4f6&color=374151&format=svg`;
-                        }}
-                      />
-                    </div>
-                    {/* Company Info */}
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900">{offering.companyName}</h3>
-                      <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
-                        <Building2 className="h-4 w-4" />
-                        {offering.sector}
-                      </p>
-                    </div>
-                  </div>
-                  {offering.status === 'closing_soon' && (
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                      Closing Soon
-                    </span>
-                  )}
-                </div>
-
-                {/* Description */}
-                <p className="text-gray-600 mb-4 line-clamp-2">{offering.description}</p>
-
-                {/* Highlights */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {offering.highlights.map((highlight, index) => (
-                    <span key={index} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">
-                      {highlight}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Progress Bar */}
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-600">Raised</span>
-                    <span className="font-medium">
-                      {((offering.raisedAmount / offering.targetRaise) * 100).toFixed(0)}%
-                    </span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full"
-                      style={{ width: `${(offering.raisedAmount / offering.targetRaise) * 100}%` }}
-                    />
-                  </div>
-                  <div className="flex justify-between text-sm mt-1">
-                    <span className="text-gray-600">
-                      NPR {(offering.raisedAmount / 10000000).toFixed(1)} Cr
-                    </span>
-                    <span className="text-gray-600">
-                      of {(offering.targetRaise / 10000000).toFixed(1)} Cr
-                    </span>
-                  </div>
-                </div>
-
-                {/* Key Metrics */}
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <p className="text-sm text-gray-600 flex items-center gap-1">
-                      <DollarSign className="h-4 w-4" />
-                      Min. Investment
-                    </p>
-                    <p className="font-semibold">NPR {offering.minInvestment.toLocaleString()}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 flex items-center gap-1">
-                      <Users className="h-4 w-4" />
-                      Investors
-                    </p>
-                    <p className="font-semibold">{offering.investorsCount}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      Closing Date
-                    </p>
-                    <p className="font-semibold">{new Date(offering.closingDate).toLocaleDateString()}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 flex items-center gap-1">
-                      <TrendingUp className="h-4 w-4" />
-                      Expected IPO
-                    </p>
-                    <p className="font-semibold">{new Date(offering.expectedIPODate).getFullYear()}</p>
-                  </div>
-                </div>
-
-                {/* Action Button */}
-                <Button 
-                  className="w-full" 
-                  variant="default"
-                  onClick={() => navigate(`/investor/offerings/${offering.id}`)}
-                >
-                  View Details
-                </Button>
-              </div>
-            </Card>
+          {filteredAndSortedOfferings.map((offering: Offering) => (
+            <OfferingCard 
+              key={offering.id} 
+              offering={offering}
+            />
           ))}
         </div>
 
         {/* Empty State */}
-        {filteredOfferings.length === 0 && (
+        {filteredAndSortedOfferings.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500">No offerings found matching your criteria.</p>
             <Button
@@ -408,11 +419,34 @@ const Offerings: React.FC = () => {
               onClick={() => {
                 setSearchTerm('');
                 setSelectedSector('All');
+                setPriceRange({ min: '', max: '' });
               }}
             >
               Clear Filters
             </Button>
           </div>
+        )}
+
+        {/* Investment Modal */}
+        {selectedOffering && (
+          <InvestmentModal
+            isOpen={showInvestmentModal}
+            onClose={() => {
+              setShowInvestmentModal(false);
+              setSelectedOffering(null);
+            }}
+            offering={{
+              id: selectedOffering.id,
+              companyName: selectedOffering.companyName,
+              logo: selectedOffering.logo,
+              minInvestment: selectedOffering.minInvestment,
+              maxInvestment: selectedOffering.maxInvestment,
+              targetRaise: selectedOffering.targetRaise,
+              raisedAmount: selectedOffering.raisedAmount,
+              investmentStructure: 'Each investment unit represents 10 shares'
+            }}
+            onInvest={handleInvestmentSubmit}
+          />
         )}
       </div>
     </div>
