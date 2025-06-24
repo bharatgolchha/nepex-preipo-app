@@ -38,11 +38,11 @@ function LandingPage() {
               <Link to="/how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">
                 How it Works
               </Link>
-              <a href="#opportunities" className="text-gray-700 hover:text-blue-600 transition-colors">
-                Opportunities
-              </a>
               <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
                 About
+              </Link>
+              <Link to="/opportunities" className="text-gray-700 hover:text-blue-600 transition-colors">
+                Opportunities
               </Link>
             </div>
 
@@ -86,19 +86,19 @@ function LandingPage() {
                 >
                   How it Works
                 </Link>
-                <a
-                  href="#opportunities"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Opportunities
-                </a>
                 <Link
                   to="/about"
                   className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   About
+                </Link>
+                <Link
+                  to="/opportunities"
+                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Opportunities
                 </Link>
                 <div className="pt-4 border-t border-gray-200 space-y-2">
                   <Link

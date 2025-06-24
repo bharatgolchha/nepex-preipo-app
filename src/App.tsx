@@ -12,6 +12,7 @@ import LandingPage from './pages/LandingPage'
 // Public Pages
 import About from './pages/public/About'
 import HowItWorks from './pages/public/HowItWorks'
+import Opportunities from './pages/public/Opportunities'
 
 // Auth Pages
 import Login from './pages/auth/Login'
@@ -59,6 +60,7 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/opportunities" element={<Opportunities />} />
               <Route path="/auth/login" element={<Login />} />
               <Route path="/auth/register" element={<Register />} />
               <Route path="/auth/investor-register" element={<InvestorRegister />} />

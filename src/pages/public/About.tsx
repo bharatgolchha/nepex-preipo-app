@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../../components/ui/button'
-import { Shield, Target, Users, Globe, Award, Heart, ArrowRight, Building2, TrendingUp, Lightbulb } from 'lucide-react'
+import { Shield, Target, Users, Globe, Award, Heart, ArrowRight, Building2, TrendingUp, Lightbulb, Menu, X } from 'lucide-react'
+import { useState } from 'react'
 
 /**
  * About Us page for NepEx Pre-IPO Investment Platform.
@@ -9,6 +10,8 @@ import { Shield, Target, Users, Globe, Award, Heart, ArrowRight, Building2, Tren
  * to build trust and credibility with potential users.
  */
 function About() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  
   const values = [
     {
       icon: Shield,
@@ -94,11 +97,14 @@ function About() {
               <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">
                 Home
               </Link>
+              <Link to="/how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">
+                How it Works
+              </Link>
               <Link to="/about" className="text-blue-600 font-medium">
                 About
               </Link>
-              <Link to="/how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">
-                How it Works
+              <Link to="/opportunities" className="text-gray-700 hover:text-blue-600 transition-colors">
+                Opportunities
               </Link>
             </div>
 
@@ -115,7 +121,77 @@ function About() {
                 </Button>
               </Link>
             </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-gray-700 hover:text-blue-600 p-2"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-sm">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <Link
+                  to="/"
+                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/how-it-works"
+                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  How it Works
+                </Link>
+                <Link
+                  to="/about"
+                  className="block px-3 py-2 text-blue-600 font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <Link
+                  to="/opportunities"
+                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Opportunities
+                </Link>
+                <div className="pt-4 border-t border-gray-200 space-y-2">
+                  <Link
+                    to="/auth/login"
+                    className="block w-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Button variant="outline" className="w-full">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link
+                    to="/auth/investor-register"
+                    className="block w-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                      Get Started
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 

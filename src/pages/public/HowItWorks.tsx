@@ -16,8 +16,11 @@ import {
   FileText,
   Target,
   Briefcase,
-  PieChart
+  PieChart,
+  Menu,
+  X
 } from 'lucide-react'
+import { useState } from 'react'
 
 /**
  * How It Works page for NepEx Pre-IPO Investment Platform.
@@ -26,6 +29,8 @@ import {
  * and step-by-step instructions for investors and companies.
  */
 function HowItWorks() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  
   const investorSteps = [
     {
       icon: UserPlus,
@@ -200,11 +205,14 @@ function HowItWorks() {
               <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">
                 Home
               </Link>
+              <Link to="/how-it-works" className="text-blue-600 font-medium">
+                How it Works
+              </Link>
               <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
                 About
               </Link>
-              <Link to="/how-it-works" className="text-blue-600 font-medium">
-                How it Works
+              <Link to="/opportunities" className="text-gray-700 hover:text-blue-600 transition-colors">
+                Opportunities
               </Link>
             </div>
 
@@ -221,7 +229,77 @@ function HowItWorks() {
                 </Button>
               </Link>
             </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-gray-700 hover:text-blue-600 p-2"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-sm">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <Link
+                  to="/"
+                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/how-it-works"
+                  className="block px-3 py-2 text-blue-600 font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  How it Works
+                </Link>
+                <Link
+                  to="/about"
+                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <Link
+                  to="/opportunities"
+                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Opportunities
+                </Link>
+                <div className="pt-4 border-t border-gray-200 space-y-2">
+                  <Link
+                    to="/auth/login"
+                    className="block w-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Button variant="outline" className="w-full">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link
+                    to="/auth/investor-register"
+                    className="block w-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                      Get Started
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
