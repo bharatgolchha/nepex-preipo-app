@@ -65,7 +65,7 @@
   - [ ] How It Works (`/how-it-works`)
   - [ ] Educational Hub (`/education`)
     - Pre-IPO basics
-    - SPV model explanation
+    - Platform user guide
     - Risk disclosure
     - Investment guide
   - [ ] FAQs (`/faqs`)
@@ -90,13 +90,13 @@
     - Invest CTA
   - [ ] Investment Flow (`/invest/:offeringId`)
     - Investment amount selection
-    - SPV unit calculation
+    - Investment calculation
     - Fee breakdown
     - Terms acceptance
     - Payment method selection
   - [ ] Portfolio (`/portfolio`)
     - Active investments list
-    - SPV units owned
+    - Investment holdings
     - Investment history
     - Documents/certificates
   - [ ] Profile Settings (`/settings`)
@@ -147,7 +147,7 @@
     - Role management
   - [ ] Transaction Monitoring (`/admin/transactions`)
     - Investment tracking
-    - SPV unit management
+    - Investment management
     - Payment reconciliation
   - [ ] Reports & Analytics (`/admin/reports`)
     - Platform metrics

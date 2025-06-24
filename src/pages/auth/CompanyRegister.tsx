@@ -234,7 +234,7 @@ const CompanyRegister: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Register and login
-      await login(formData.email, 'temp_password', 'company');
+      await login(formData.email, 'temp_password');
       
       // Redirect to company dashboard
       navigate('/company/dashboard');

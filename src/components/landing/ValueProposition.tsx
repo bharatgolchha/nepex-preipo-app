@@ -3,7 +3,7 @@ import { Shield, Users, TrendingUp, Zap, Eye, HeadphonesIcon } from 'lucide-reac
 /**
  * Value proposition section showcasing the key benefits of NepEx.
  * 
- * Highlights micro-investments, investment pooling, secure platform,
+ * Highlights micro-investments, direct investments, secure platform,
  * transparent processes, and expert support.
  */
 function ValueProposition() {
@@ -15,8 +15,8 @@ function ValueProposition() {
     },
     {
       icon: Users,
-      title: "Investment Pooling",
-      description: "Pool your investments with other investors to access larger opportunities.",
+      title: "Community Platform",
+      description: "Join a community of investors accessing exclusive pre-IPO opportunities.",
     },
     {
       icon: Shield,

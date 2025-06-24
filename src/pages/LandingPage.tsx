@@ -35,15 +35,15 @@ function LandingPage() {
 
             {/* Navigation Links - Desktop */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">
+              <Link to="/how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">
                 How it Works
-              </a>
+              </Link>
               <a href="#opportunities" className="text-gray-700 hover:text-blue-600 transition-colors">
                 Opportunities
               </a>
-              <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors">
+              <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
                 About
-              </a>
+              </Link>
             </div>
 
             {/* Auth Buttons - Desktop */}
@@ -79,13 +79,13 @@ function LandingPage() {
           {mobileMenuOpen && (
             <div className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-sm">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a
-                  href="#how-it-works"
+                <Link
+                  to="/how-it-works"
                   className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   How it Works
-                </a>
+                </Link>
                 <a
                   href="#opportunities"
                   className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
@@ -93,13 +93,13 @@ function LandingPage() {
                 >
                   Opportunities
                 </a>
-                <a
-                  href="#about"
+                <Link
+                  to="/about"
                   className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   About
-                </a>
+                </Link>
                 <div className="pt-4 border-t border-gray-200 space-y-2">
                   <Link
                     to="/auth/login"

@@ -55,7 +55,7 @@ function HeroSection() {
             </div>
             <div className="flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-sm rounded-lg border border-border shadow-sm">
               <Users className="w-4 h-4 text-purple-600" />
-              <span className="text-sm font-medium text-foreground">Investment pooling mechanism</span>
+              <span className="text-sm font-medium text-foreground">Direct investment platform</span>
             </div>
           </div>
           

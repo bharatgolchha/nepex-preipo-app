@@ -20,10 +20,10 @@ const faqs = [
     question: "What is the lock-in period?",
     answer: "Pre-IPO investments typically have a 3-year lock-in period before you can exit."
   },
-  {
-    question: "What is investment pooling?",
-    answer: "Investment pooling allows multiple small investors to combine their investments to participate in larger pre-IPO opportunities."
-  },
+      {
+      question: "What makes NepEx different?",
+      answer: "NepEx provides direct access to pre-IPO investments with comprehensive due diligence, regulatory compliance, and investor protection."
+    },
   {
     question: "How do I track my investments?",
     answer: "You can monitor all your investments through your personalized dashboard with real-time updates."
@@ -47,8 +47,8 @@ function EducationHub() {
     {
       type: "Video",
       icon: Video,
-      title: "Investment Pooling Guide",
-      description: "Visual explanation of investment pooling mechanism and micro-investments.",
+      title: "Platform User Guide",
+      description: "Complete walkthrough of using NepEx platform for pre-IPO investments.",
       readTime: "5 min watch",
       category: "Intermediate"
     },
@@ -77,7 +77,7 @@ function EducationHub() {
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Master pre-IPO investing with our comprehensive educational resources. 
-              Learn about investment pooling, risk management, and investment strategies.
+              Learn about direct investments, risk management, and investment strategies.
             </p>
           </div>
 
@@ -185,10 +185,10 @@ function EducationHub() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground mb-1">
-                      Investment Pooling Mechanism
+                      Platform Navigation
                     </h4>
                     <p className="text-muted-foreground text-sm">
-                      Understand how micro-investments work through investment pooling
+                      Learn to navigate NepEx platform and access investment opportunities
                     </p>
                   </div>
                 </div>

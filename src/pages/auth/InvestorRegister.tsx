@@ -20,7 +20,6 @@ import {
   Calendar,
   Shield,
   TrendingUp,
-  DollarSign,
   FileText
 } from 'lucide-react';
 

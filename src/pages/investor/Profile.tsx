@@ -14,8 +14,7 @@ import {
   AlertCircle,
   Edit2,
   Save,
-  X,
-  Mail
+  X
 } from 'lucide-react';
 
 // Sample user data
